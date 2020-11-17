@@ -40,7 +40,7 @@ docker restart sit-careers-composer
 ```
 If you face error `PermissionError on db folder` Please use
 ```bash
-chown -R $USER:$USER db/
+sudo chown -R $USER:$USER db/
 ```
 
 -----
