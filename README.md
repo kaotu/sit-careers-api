@@ -38,6 +38,10 @@ docker-compose -f docker-compose.local.yml up
 ```bash
 docker restart sit-careers-composer
 ```
+If you face error `PermissionError on db folder` Please use
+```bash
+chown -R $USER:$USER db/
+```
 
 -----
 Enjoy !! ✌
