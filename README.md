@@ -22,6 +22,22 @@ php artisan serve
 ```
 
 > Don't forget change .env
+-----
+
+##### Start Project by docker-compose
+###### You can use docker-compose with development
+1. For the first time.
+```bash
+docker-compose -f docker-compose.local.yml up --build
+```
+2. Next time.
+```bash
+docker-compose -f docker-compose.local.yml up
+```
+3. If you install some libs and want use composer. `Just restart composer container` and wait.
+```bash
+docker restart sit-careers-composer
+```
 
 -----
 Enjoy !! ✌
