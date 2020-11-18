@@ -42,6 +42,10 @@ If you face error `PermissionError on db folder` Please use
 ```bash
 sudo chown -R $USER:$USER db/
 ```
+If you want to exec to container api use
+```bash
+docker exec -it sit-careers-api bash
+```
 
 -----
 Enjoy !! ✌
