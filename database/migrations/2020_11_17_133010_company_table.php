@@ -14,7 +14,7 @@ class CompanyTable extends Migration
     public function up()
     {
         Schema::create('company', function (Blueprint $table) {
-            $table->uuid('company_id');
+            $table->bigIncrements('company_id')->unsigned();
             $table->string('company_name_th');
             $table->string('company_name_en');
             $table->string('company_type');
@@ -36,6 +36,8 @@ class CompanyTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Company');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('company');
+        Schema::enableForeignKeyConstraints();
     }
 }
