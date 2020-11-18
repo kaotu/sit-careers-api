@@ -19,7 +19,10 @@ class MouTable extends Migration
             $table->string('mou_link');
             $table->string('mou_type');
             $table->string('contact_period');
-            $table->foreign('company_id')->references('company_id')->on('company');
+        });
+
+        Schema::table('mou', function (Blueprint $table) {
+            $table->foreign('company_id')->references('company_id')->on('companies');
         });
     }
 
