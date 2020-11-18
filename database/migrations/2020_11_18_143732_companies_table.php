@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CompanyTable extends Migration
+class CompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CompanyTable extends Migration
      */
     public function up()
     {
-        Schema::create('company', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->uuid('company_id')->primary();
             $table->string('company_name_th');
             $table->string('company_name_en');
@@ -37,7 +37,7 @@ class CompanyTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('company');
+        Schema::dropIfExists('companies');
         Schema::enableForeignKeyConstraints();
     }
 }

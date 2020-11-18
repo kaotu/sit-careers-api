@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddressTable extends Migration
+class AddressesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddressTable extends Migration
      */
     public function up()
     {
-        Schema::create('address', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->uuid('address_id')->primary();
             $table->string('address_one');
             $table->string('address_two');
@@ -24,7 +24,10 @@ class AddressTable extends Migration
             $table->string('province');
             $table->string('postal_code');
             $table->uuid('company_id')->nullable(false);
-            $table->foreign('company_id')->references('company_id')->on('company');
+        });
+
+        Schema::table('addresses', function (Blueprint $table) {
+            $table->foreign('company_id')->references('company_id')->on('companies');
         });
     }
 
@@ -36,7 +39,7 @@ class AddressTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('address');
+        Schema::dropIfExists('addresses');
         Schema::enableForeignKeyConstraints();
     }
 }
