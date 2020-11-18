@@ -14,7 +14,7 @@ class AddressTable extends Migration
     public function up()
     {
         Schema::create('address', function (Blueprint $table) {
-            $table->bigIncrements('address_id');
+            $table->uuid('address_id')->primary();
             $table->string('address_one');
             $table->string('address_two');
             $table->string('lane');
@@ -23,7 +23,8 @@ class AddressTable extends Migration
             $table->string('district');
             $table->string('province');
             $table->string('postal_code');
-            $table->foreignId('company_id')->references('company_id')->on('company');
+            $table->uuid('company_id')->nullable(false);
+            $table->foreign('company_id')->references('company_id')->on('company');
         });
     }
 
