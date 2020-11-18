@@ -21,12 +21,13 @@ class CompaniesTable extends Migration
             $table->string('description');
             $table->string('about_us');
             $table->string('logo');
-            $table->string('business_days');
+            $table->date('business_days');
             $table->string('business_time');
             $table->integer('tel_no');
             $table->integer('phone_no');
             $table->string('website');
         });
+
     }
 
     /**
