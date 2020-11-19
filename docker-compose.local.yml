@@ -1,11 +1,11 @@
 version: "3.8"
 services:
-  
+
   api:
-    image: sit-careers-api:dev
+    image: sit-careers-api:local
     build:
       context: .
-      dockerfile: ./docker/api/Dockerfile
+      dockerfile: ./docker/api/Dockerfile-local
     working_dir: /app
     container_name: sit-careers-api
     restart: always
@@ -21,10 +21,10 @@ services:
       - sit-careers
 
   composer:
-    image: sit-careers-api:dev
+    image: sit-careers-api:local
     build:
       context: .
-      dockerfile: ./docker/api/Dockerfile
+      dockerfile: ./docker/api/Dockerfile-local
     working_dir: /app
     container_name: sit-careers-composer
     entrypoint:
@@ -47,7 +47,7 @@ services:
         MYSQL_ROOT_PASSWORD: root
     networks:
         - sit-careers
-    
+
   phpmyadmin:
       image: phpmyadmin/phpmyadmin:latest
       restart: always
@@ -61,7 +61,7 @@ services:
           - db
       networks:
           - sit-careers
-      
+
 networks:
   sit-careers:
     driver: bridge
