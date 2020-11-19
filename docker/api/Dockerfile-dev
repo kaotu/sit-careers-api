@@ -30,7 +30,7 @@ RUN composer update --no-scripts
 RUN composer install --no-scripts
 
 ## COPY ENV EXAMPLE
-COPY ./.env $APPLICATION_ROOT/.env
+COPY ./.env.example $APPLICATION_ROOT/.env
 
 RUN php artisan key:generate
 RUN php artisan config:clear
