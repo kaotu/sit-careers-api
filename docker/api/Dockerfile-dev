@@ -32,7 +32,9 @@ COPY ./.env.example $APPLICATION_ROOT/.env
 RUN php artisan key:generate
 RUN php artisan config:clear
 
-RUN chown -R www-data:www-data /app
+RUN chown -R www-data:www-data $APPLICATION_ROOT
 RUN chmod 755 -R $APPLICATION_ROOT/storage/
+
+VOLUME $APPLICATION_ROOT
 
 EXPOSE 9000
