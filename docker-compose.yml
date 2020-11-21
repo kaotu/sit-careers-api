@@ -9,6 +9,8 @@ services:
     working_dir: /app
     container_name: sit-careers-api
     restart: always
+    env_file:
+      - .env
     volumes:
       - ./:/app
     networks:
