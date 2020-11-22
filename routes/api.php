@@ -17,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('company', 'CompanyController@get');
+Route::post('company', 'CompanyController@create');
+Route::put('company', 'CompanyController@update');
+Route::delete('company', 'CompanyController@destroy');
+
+// keep for dashboard feature
+Route::get('companies', 'CompanyController@getCompanies');
