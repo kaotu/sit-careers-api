@@ -2,20 +2,25 @@ version: "3.8"
 services:
 
   api:
-    image: sit-careers-api:dev
+    image: 192479299400.dkr.ecr.ap-southeast-1.amazonaws.com/sit-careers-api:api-dev
     build:
       context: .
       dockerfile: ./docker/api/Dockerfile-dev
     working_dir: /app
     container_name: sit-careers-api
     restart: always
+    env_file:
+      - .env
     volumes:
       - ./:/app
     networks:
       - sit-careers
 
   api-nginx:
-    image: nginx:1.19.4-alpine
+    image: 192479299400.dkr.ecr.ap-southeast-1.amazonaws.com/sit-careers-api:nginx-dev
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
     working_dir: /etc/nginx
     container_name: sit-careers-api-nginx
     restart: always

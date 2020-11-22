@@ -15,9 +15,6 @@ COPY ./public $APPLICATION_ROOT/public
 COPY ./resources $APPLICATION_ROOT/resources
 COPY ./storage $APPLICATION_ROOT/storage
 
-COPY ./docker/api/entrypoint.sh $APPLICATION_ROOT/docker/api/entrypoint.sh
-RUN chmod +x $APPLICATION_ROOT/docker/api/entrypoint.sh
-
 COPY ./docker/api/php-config.ini /usr/local/etc/php/conf.d/php-config.ini
 
 COPY ./app $APPLICATION_ROOT/app
@@ -35,7 +32,9 @@ COPY ./.env.example $APPLICATION_ROOT/.env
 RUN php artisan key:generate
 RUN php artisan config:clear
 
-RUN chmod 775 -R $APPLICATION_ROOT/storage/
-RUN chmod 775 -R $APPLICATION_ROOT/storage/logs
+RUN chown -R www-data:www-data $APPLICATION_ROOT
+RUN chmod 755 -R $APPLICATION_ROOT/storage/
+
+VOLUME $APPLICATION_ROOT
 
 EXPOSE 9000
