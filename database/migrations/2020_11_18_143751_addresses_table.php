@@ -19,11 +19,13 @@ class AddressesTable extends Migration
             $table->string('address_two');
             $table->string('lane');
             $table->string('road');
-            $table->string('sub-district');
+            $table->string('sub_district');
             $table->string('district');
             $table->string('province');
-            $table->string('postal_code');
+            $table->string('postal_code', 10);
             $table->uuid('company_id')->nullable(false);
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('addresses', function (Blueprint $table) {
