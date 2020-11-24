@@ -22,7 +22,7 @@ class AddressesTable extends Migration
             $table->string('sub_district');
             $table->string('district');
             $table->string('province');
-            $table->string('postal_code', 10);
+            $table->string('postal_code', 5);
             $table->uuid('company_id')->nullable(false);
             $table->timestamps();
             $table->softDeletes();
