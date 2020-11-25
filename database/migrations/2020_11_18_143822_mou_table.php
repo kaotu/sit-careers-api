@@ -19,6 +19,8 @@ class MouTable extends Migration
             $table->string('mou_link');
             $table->string('mou_type');
             $table->string('contact_period');
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('mou', function (Blueprint $table) {
