@@ -21,8 +21,12 @@ class CompaniesTable extends Migration
             $table->string('description');
             $table->string('about_us');
             $table->string('logo')->nullable();
-            $table->string('business_days', 50);
-            $table->string('business_time', 50);
+            $table->string('e_mail_manager', 50);
+            $table->string('e_mail_coordinator', 50);
+            $table->string('start_business_day', 20);
+            $table->string('end_business_day', 20);
+            $table->string('start_business_time', 10);
+            $table->string('end_business_time', 10);
             $table->string('tel_no', 10);
             $table->string('phone_no', 10);
             $table->string('website');
