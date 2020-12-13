@@ -122,11 +122,28 @@ class CompanyTest extends TestCase
 
     public function test_post_company_fail_should_return_status_500 ()
     {
+        $data = [];
+
+        $response = $this->postJson('api/company', $data);
+        $response->assertStatus(500);
+    }
+
+    public function test_update_company_fail_should_return_status_500()
+    {
+        $address = factory(Address::class)->create([
+            "company_id" => $this->faker->company_id,
+            "address_id" => Uuid::uuid()
+        ]);
+        $mou = factory(MOU::class)->create([
+            "company_id" => $this->faker->company_id,
+            "mou_id" => Uuid::uuid()
+        ]);
+
         $data = [
             'company_id' => $this->faker->company_id
         ];
 
-        $response = $this->postJson('api/company', $data);
+        $response = $this->putJson('api/company', $data);
         $response->assertStatus(500);
     }
 }
