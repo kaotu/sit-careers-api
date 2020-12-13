@@ -45,7 +45,7 @@ docker exec -it sit-careers-api bash
 ###### Testing on local
 1. Copy .env.example to .env.testing and Change database
 ```bash
-cp .env.example .env
+cp .env.example .env.testing
 
 DB_HOST=db
 DB_DATABASE=sitcareers_testing
