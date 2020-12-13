@@ -28,7 +28,7 @@ class CompanyTest extends TestCase
     public function test_post_company_success_should_return_company()
     {
         $data = [
-            'company_id' => $this->faker->company_id, 
+            'company_id' => $this->faker->company_id,
             'company_name_th' => 'บริษัท เทส จำกัด',
             'company_name_en' => 'Test COmpany',
             'description' => 'เป็นบริษัทพัฒนา software บริษัทใหญ่ อยู่เยอรมัน',
@@ -56,10 +56,10 @@ class CompanyTest extends TestCase
             "mou_link" => "https://www.google.co.th",
             "contact_period" => "30 กันยายน 2563 - 30 กันยายน 2565"
         ];
-        
+
         $response = $this->postJson('api/company', $data);
         $response->assertStatus(200);
-        
+
         $response_arr = json_decode($response->content(), true);
         $company = Company::find($response_arr['company_id']);
         $company_arr = $company->toArray()['company_id'];
@@ -110,7 +110,7 @@ class CompanyTest extends TestCase
 
         $response = $this->putJson('api/company', $data);
         $response->assertStatus(200);
-        
+
         $response_arr = json_decode($response->content(), true);
         $company = Company::find($response_arr['company_id']);
         $company_arr = $company->toArray();
@@ -118,5 +118,32 @@ class CompanyTest extends TestCase
         // Check field that are changed
         $this->assertEquals($company_arr['company_id'], $response_arr['company_id']);
         $this->assertEquals($company_arr['company_name_th'], $response_arr['company_name_th']);
+    }
+
+    public function test_post_company_fail_should_return_status_500 ()
+    {
+        $data = [];
+
+        $response = $this->postJson('api/company', $data);
+        $response->assertStatus(500);
+    }
+
+    public function test_update_company_fail_should_return_status_500()
+    {
+        $address = factory(Address::class)->create([
+            "company_id" => $this->faker->company_id,
+            "address_id" => Uuid::uuid()
+        ]);
+        $mou = factory(MOU::class)->create([
+            "company_id" => $this->faker->company_id,
+            "mou_id" => Uuid::uuid()
+        ]);
+
+        $data = [
+            'company_id' => $this->faker->company_id
+        ];
+
+        $response = $this->putJson('api/company', $data);
+        $response->assertStatus(500);
     }
 }
