@@ -39,10 +39,10 @@ class CompanyTest extends TestCase
             'end_business_day' => 'ศุกร์',
             'start_business_time' => '07:00',
             'end_business_time' => '18:00',
-            'e_mail_coordinator' => 'test@gmail.com',
-            'e_mail_manager' => 'company@gmail.com',
+            'e_mail_coordinator' => 'test1@gmail.com',
+            'e_mail_manager' => 'company1@gmail.com',
             'tel_no' => '0988882356',
-            'phone_no' => '0298987645',
+            'phone_no' => '0298987640',
             'website' => 'http://test.com',
             "address_one" => "138/2 หอพักสตรีพสิษฐ์",
             "address_two" => "-",
@@ -120,12 +120,68 @@ class CompanyTest extends TestCase
         $this->assertEquals($company_arr['company_name_th'], $response_arr['company_name_th']);
     }
 
-    public function test_post_company_fail_should_return_status_500 ()
+    public function test_post_company_not_have_some_field_should_return_status_400()
+    {
+        $data = [
+            'company_name_th' => '',
+            'company_name_en' => '',
+            'description' => 'เป็นบริษัทพัฒนา software บริษัทใหญ่ อยู่เยอรมัน',
+            'about_us' => 'อยากเท่ อยากเจ๋ง มาเข้าบริษัทนี้',
+            'logo' => 'path/to/logo',
+            'company_type' => 'Technology',
+            'start_business_day' => 'จันทร์',
+            'end_business_day' => 'ศุกร์',
+            'start_business_time' => '07:00',
+            'end_business_time' => '18:00',
+            'e_mail_coordinator' => 'test@gmail.com',
+            'e_mail_manager' => 'company@gmail.com',
+            'tel_no' => '',
+            'phone_no' => '0298987645',
+            'website' => 'http://test.com',
+            "address_one" => "138/2 พรีวิวหอพัก",
+            "address_two" => "-",
+            "lane" => "9",
+            "road" => "วิภาวดีรังสิต",
+            "sub_district" => "ดินแดง",
+            "district" => "ดินแดง",
+            "province" => "กรุงเทพ",
+            "postal_code" => "10400",
+            "mou_type" => "ชนิด MOU",
+            "mou_link" => "https://www.google.co.th",
+            "contact_period" => "30 กันยายน 2563 - 30 กันยายน 2565"
+        ];
+
+        $response = $this->postJson('api/company', $data);
+        $expect = json_decode($response->content(), true);
+
+        $assertion = [
+            "company_name_th" => [
+                "The company name th field is required."
+            ],
+            "company_name_en" => [
+                "The company name en field is required."
+            ],
+            "tel_no" => [
+                "The tel no field is required."
+            ],
+            "e_mail_coordinator" => [
+                "The e mail coordinator has already been taken."
+            ],
+            "e_mail_manager" => [
+                "The e mail manager has already been taken."
+            ]
+        ];
+            
+        $response->assertStatus(400);
+        $this->assertEquals($assertion, $expect);
+    }
+
+    public function test_post_company_not_have_field_should_return_message()
     {
         $data = [];
 
         $response = $this->postJson('api/company', $data);
-        $response->assertStatus(500);
+        $response->assertStatus(400);
     }
 
     public function test_update_company_fail_should_return_status_500()
