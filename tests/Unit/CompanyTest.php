@@ -135,7 +135,7 @@ class CompanyTest extends TestCase
             'end_business_time' => '18:00',
             'e_mail_coordinator' => 'test@gmail.com',
             'e_mail_manager' => 'company@gmail.com',
-            'tel_no' => '',
+            'tel_no' => '0298987644',
             'phone_no' => '0298987645',
             'website' => 'http://test.com',
             "address_one" => "138/2 พรีวิวหอพัก",
@@ -160,9 +160,6 @@ class CompanyTest extends TestCase
             ],
             "company_name_en" => [
                 "The company name en field is required."
-            ],
-            "tel_no" => [
-                "The tel no field is required."
             ],
             "e_mail_coordinator" => [
                 "The e mail coordinator has already been taken."
