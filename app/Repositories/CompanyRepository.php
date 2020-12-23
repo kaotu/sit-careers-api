@@ -40,23 +40,23 @@ class CompanyRepository implements CompanyRepositoryInterface
         $company->company_type = $data['company_type'];
         $company->description = $data['description'];
         $company->about_us = $data['about_us'];
-        $company->logo = $data['logo'];
+        $company->logo = $data['logo'] == "" ? "-": $data['logo'];
         $company->e_mail_manager = $data['e_mail_manager'];
         $company->e_mail_coordinator = $data['e_mail_coordinator'];
         $company->start_business_day = $data['start_business_day'] . ', '. $data['start_business_time'];
         $company->end_business_day = $data['end_business_day'] . ', '. $data['end_business_time'];
         $company->start_business_time = $data['start_business_time'];
         $company->end_business_time = $data['end_business_time'];
-        $company->tel_no = $data['tel_no'];
-        $company->phone_no = $data['phone_no'];
-        $company->website = $data['website'];
+        $company->tel_no = $data['tel_no'] == "" ? "-": $data['tel_no'];
+        $company->phone_no = $data['phone_no'] == "" ? "-": $data['phone_no'];
+        $company->website = $data['website'] == "" ? "-": $data['website'];
         $company->save();
 
         $address = new Address();
         $address->address_one = $data['address_one'];
-        $address->address_two = $data['address_two'];
-        $address->lane = $data['lane'];
-        $address->road = $data['road'];
+        $address->address_two = $data['address_two'] == "" ? "-": $data['address_two'];
+        $address->lane = $data['lane'] == "" ? "-": $data['lane'];
+        $address->road = $data['road'] == "" ? "-": $data['road'];
         $address->sub_district = $data['sub_district'];
         $address->district = $data['district'];
         $address->province = $data['province'];
@@ -66,9 +66,9 @@ class CompanyRepository implements CompanyRepositoryInterface
 
         $mou = new MOU();
         $mou->company_id = $company->company_id;
-        $mou->mou_link = $data['mou_link'];
-        $mou->mou_type = $data['mou_type'];
-        $mou->contact_period = $data['contact_period'];
+        $mou->mou_link = $data['mou_link'] == "" ? "-": $data['mou_link'];
+        $mou->mou_type = $data['mou_type'] == "" ? "-": $data['mou_type'];
+        $mou->contact_period = $data['contact_period'] == "" ? "-": $data['contact_period'];
         $mou->save();
 
         return array_merge($company->toArray(),  $address->toArray(), $mou->toArray());
@@ -83,36 +83,35 @@ class CompanyRepository implements CompanyRepositoryInterface
         $company->company_type = $data['company_type'];
         $company->description = $data['description'];
         $company->about_us = $data['about_us'];
-        $company->logo = $data['logo'];
+        $company->logo = $data['logo'] == "" ? "-": $data['logo'];
         $company->e_mail_manager = $data['e_mail_manager'];
         $company->e_mail_coordinator = $data['e_mail_coordinator'];
-        $company->start_business_day = $data['start_business_day'];
-        $company->end_business_day = $data['end_business_day'];
+        $company->start_business_day = $data['start_business_day'] . ', '. $data['start_business_time'];
+        $company->end_business_day = $data['end_business_day'] . ', '. $data['end_business_time'];
         $company->start_business_time = $data['start_business_time'];
         $company->end_business_time = $data['end_business_time'];
-        $company->tel_no = $data['tel_no'];
-        $company->phone_no = $data['phone_no'];
-        $company->website = $data['website'];
-        $company->updated_at = Carbon::now();
+        $company->tel_no = $data['tel_no'] == "" ? "-": $data['tel_no'];
+        $company->phone_no = $data['phone_no'] == "" ? "-": $data['phone_no'];
+        $company->website = $data['website'] == "" ? "-": $data['website'];
         $company->save();
 
-        $address = Address::where('company_id', $data['company_id'])->first();
+        $address = new Address();
         $address->address_one = $data['address_one'];
-        $address->address_two = $data['address_two'];
-        $address->lane = $data['lane'];
-        $address->road = $data['road'];
+        $address->address_two = $data['address_two'] == "" ? "-": $data['address_two'];
+        $address->lane = $data['lane'] == "" ? "-": $data['lane'];
+        $address->road = $data['road'] == "" ? "-": $data['road'];
         $address->sub_district = $data['sub_district'];
         $address->district = $data['district'];
         $address->province = $data['province'];
         $address->postal_code = $data['postal_code'];
-        $company->updated_at = Carbon::now();
+        $address->company_id = $company->company_id;
         $address->save();
 
-        $mou = MOU::where('company_id', $data['company_id'])->first();
-        $mou->mou_link = $data['mou_link'];
-        $mou->mou_type = $data['mou_type'];
-        $mou->contact_period = $data['contact_period'];
-        $company->updated_at = Carbon::now();
+        $mou = new MOU();
+        $mou->company_id = $company->company_id;
+        $mou->mou_link = $data['mou_link'] == "" ? "-": $data['mou_link'];
+        $mou->mou_type = $data['mou_type'] == "" ? "-": $data['mou_type'];
+        $mou->contact_period = $data['contact_period'] == "" ? "-": $data['contact_period'];
         $mou->save();
 
         return array_merge($company->toArray(),  $address->toArray(), $mou->toArray());
