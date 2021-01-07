@@ -12,6 +12,7 @@ trait CompanyRules
         'company_name_th' => 'required|string',
         'company_name_en' => 'required|string',
         'company_type' => 'required|string',
+        'company_image_logo' => 'nullable|mimes:jpeg,jpg,png,gif|max:50000',
         'description' => 'required|string',
         'about_us' => 'required|string',
         'start_business_day' => 'required|string',

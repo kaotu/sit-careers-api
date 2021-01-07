@@ -45,6 +45,10 @@ class CompanyController extends Controller
     public function create(Request $request)
     {
         $data = $request->all();
+        $validated = Validator::make($data, $this->rulesCreationCompany);
+        if ($validated->fails()) {
+            return response()->json($validated->messages(), 400);
+        }
         $s3 = Storage::disk('s3');
         $companyName = str_replace(' ', '_', $data['company_name_en']);
         $companyNamePath = $companyName.'_'.rand(10000, 99999).'.jpg';
@@ -52,10 +56,6 @@ class CompanyController extends Controller
         if (!is_null($file)) {
             $uploaded = $s3->put('/logo/'.$companyNamePath, file_get_contents($file), 'public');
             $data['logo'] = $companyNamePath;
-        }
-        $validated = Validator::make($data, $this->rulesCreationCompany);
-        if ($validated->fails()) {
-            return response()->json($validated->messages(), 400);
         }
         $companies = $this->company->createCompany($data);
         return response()->json($companies, 200);
