@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
+use Storage;
+use Config;
+
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Filesystem\Filesystem;
+use League\Flysystem\AwsS3v3\AwsS3Adapter;
+
 use App\Http\Controllers\Controller as Controller;
 use App\Repositories\CompanyRepositoryInterface;
 use App\Http\RulesValidation\CompanyRules;
-use Validator;
+
 
 class CompanyController extends Controller
 {
@@ -21,7 +28,7 @@ class CompanyController extends Controller
     public function get(Request $request)
     {
         $id = $request->all();
-        $validated = Validator::make($data, $this->rulesCreationCompany);
+        $validated = Validator::make($id, $this->rulesGetCompanyById);
         if ($validated->fails()) {
             return response()->json($validated->messages(), 400);
         }
@@ -38,6 +45,14 @@ class CompanyController extends Controller
     public function create(Request $request)
     {
         $data = $request->all();
+        $s3 = Storage::disk('s3');
+        $companyName = str_replace(' ', '_', $data['company_name_en']);
+        $companyNamePath = $companyName.'_'.rand(10000, 99999).'.jpg';
+        $file = $request->file('company_logo_image');
+        if (!is_null($file)) {
+            $uploaded = $s3->put('/logo/'.$companyNamePath, file_get_contents($file), 'public');
+            $data['logo'] = $companyNamePath;
+        }
         $validated = Validator::make($data, $this->rulesCreationCompany);
         if ($validated->fails()) {
             return response()->json($validated->messages(), 400);
