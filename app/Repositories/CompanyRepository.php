@@ -43,8 +43,8 @@ class CompanyRepository implements CompanyRepositoryInterface
         $company->logo = $data['logo'] == "" ? "-": $data['logo'];
         $company->e_mail_manager = $data['e_mail_manager'];
         $company->e_mail_coordinator = $data['e_mail_coordinator'];
-        $company->start_business_day = $data['start_business_day'] . ', '. $data['start_business_time'];
-        $company->end_business_day = $data['end_business_day'] . ', '. $data['end_business_time'];
+        $company->start_business_day = $data['start_business_day'];
+        $company->end_business_day = $data['end_business_day'];
         $company->start_business_time = $data['start_business_time'];
         $company->end_business_time = $data['end_business_time'];
         $company->tel_no = $data['tel_no'] == "" ? "-": $data['tel_no'];
@@ -86,8 +86,8 @@ class CompanyRepository implements CompanyRepositoryInterface
         $company->logo = $data['logo'] == "" ? "-": $data['logo'];
         $company->e_mail_manager = $data['e_mail_manager'];
         $company->e_mail_coordinator = $data['e_mail_coordinator'];
-        $company->start_business_day = $data['start_business_day'] . ', '. $data['start_business_time'];
-        $company->end_business_day = $data['end_business_day'] . ', '. $data['end_business_time'];
+        $company->start_business_day = $data['start_business_day'];
+        $company->end_business_day = $data['end_business_day'];
         $company->start_business_time = $data['start_business_time'];
         $company->end_business_time = $data['end_business_time'];
         $company->tel_no = $data['tel_no'] == "" ? "-": $data['tel_no'];
