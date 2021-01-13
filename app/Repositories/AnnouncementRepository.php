@@ -23,6 +23,11 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $announcement->status = $data['status'];
         $announcement->save();
 
-        return array_merge($announcement->toArray());
+        $jobType = new JobType();
+        $jobType->announcement_id = $announcement->announcement_id;
+        $jobType->job_type = $data['job_type'];
+        $jobType->save();
+
+        return array_merge($announcement->toArray(), $jobType->toArray());
     }
 }
