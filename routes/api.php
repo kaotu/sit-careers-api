@@ -23,5 +23,7 @@ Route::post('company', 'CompanyController@create');
 Route::put('company', 'CompanyController@update');
 Route::delete('company', 'CompanyController@destroy');
 
+Route::post('academic-industry', 'AnnouncementController@create');
+
 // keep for dashboard feature
 Route::get('companies', 'CompanyController@getCompanies');
