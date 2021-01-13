@@ -16,6 +16,8 @@ class JobPositionsTable extends Migration
         Schema::create('job_positions', function (Blueprint $table) {
             $table->uuid('job_position_id')->primary();
             $table->string('job_position');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
