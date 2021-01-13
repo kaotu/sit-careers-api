@@ -18,7 +18,7 @@ class Company extends Model
     protected $keyType = 'uuid';
 
     const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at'; 
+    const UPDATED_AT = 'updated_at';
     const DELETED_AT = 'deleted_at';
 
     public function address()
@@ -29,5 +29,10 @@ class Company extends Model
     public function mou()
     {
         return $this->hasMany('App\Models\MOU', 'company_id');
+    }
+
+    public function announcement()
+    {
+        return $this->hasOne('App\Model\Announcement', 'announcement_id');
     }
 }
