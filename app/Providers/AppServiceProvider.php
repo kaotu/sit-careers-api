@@ -16,7 +16,10 @@ class AppServiceProvider extends ServiceProvider
         $models = array(
             'Company',
             'Address',
-            'MOU'
+            'MOU',
+            'Announcement',
+            'JobPosition',
+            'JobType'
         );
 
         foreach ($models as $model) {

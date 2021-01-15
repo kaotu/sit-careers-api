@@ -17,6 +17,8 @@ class JobTypesTable extends Migration
             $table->uuid('job_id')->primary();
             $table->uuid('announcement_id')->nullable(false);
             $table->string('job_type');
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('job_types', function (Blueprint $table) {

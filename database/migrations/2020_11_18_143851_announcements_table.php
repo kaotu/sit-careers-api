@@ -23,9 +23,10 @@ class AnnouncementsTable extends Migration
             $table->string('picture');
             $table->date('start_date');
             $table->date('end_date');
-            $table->date('updated_at');
             $table->string('welfare');
             $table->string('status');
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('announcements', function (Blueprint $table) {
