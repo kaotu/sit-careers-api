@@ -7,12 +7,15 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Models\Announcement;
-use App\Models\JobPosition;
-use Faker\Provider\Uuid;
 
 class AnnouncementTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function test_get_all_announcements_success_should_return_status_200()
+    {
+        $this->get('api/academic-industry')->assertStatus(200);
+    }
 
     public function test_post_announcement_success_should_return_announcement()
     {
