@@ -40,4 +40,8 @@ trait CompanyRules
     private $rulesGetCompanyById = [
         'company_id' => 'required|string'
     ];
+
+    private $rulesUpdateCompanyById = [
+        'company_id' => 'required|string'
+    ];
 }

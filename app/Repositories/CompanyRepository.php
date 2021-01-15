@@ -76,7 +76,8 @@ class CompanyRepository implements CompanyRepositoryInterface
 
     public function updateCompanyById($data)
     {
-        $company = Company::find($data['company_id']);
+        $id = $data['company_id'];
+        $company = Company::find($id);
 
         $company->company_name_th = $data['company_name_th'];
         $company->company_name_en = $data['company_name_en'];
@@ -95,7 +96,7 @@ class CompanyRepository implements CompanyRepositoryInterface
         $company->website = $data['website'] == "" ? "-": $data['website'];
         $company->save();
 
-        $address = new Address();
+        $address = Address::where('company_id', $id)->first();
         $address->address_one = $data['address_one'];
         $address->address_two = $data['address_two'] == "" ? "-": $data['address_two'];
         $address->lane = $data['lane'] == "" ? "-": $data['lane'];
@@ -107,7 +108,7 @@ class CompanyRepository implements CompanyRepositoryInterface
         $address->company_id = $company->company_id;
         $address->save();
 
-        $mou = new MOU();
+        $mou = MOU::where('company_id', $id)->first();
         $mou->company_id = $company->company_id;
         $mou->mou_link = $data['mou_link'] == "" ? "-": $data['mou_link'];
         $mou->mou_type = $data['mou_type'] == "" ? "-": $data['mou_type'];
