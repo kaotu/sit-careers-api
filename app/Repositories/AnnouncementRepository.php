@@ -2,12 +2,23 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\DB;
+
 use App\Models\Announcement;
 use App\Models\JobPosition;
 use App\Models\JobType;
 
 class AnnouncementRepository implements AnnouncementRepositoryInterface
 {
+    public function getAllAnnouncements()
+    {
+        $announcement = DB::table('announcements')
+        ->join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
+        ->join('job_types', 'job_types.announcement_id', '=', 'announcements.announcement_id')
+        ->get();
+        return $announcement;
+    }
+
     public function createAnnouncement($data)
     {
         $announcement = new Announcement();
