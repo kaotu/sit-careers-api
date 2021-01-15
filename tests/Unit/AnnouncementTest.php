@@ -7,8 +7,6 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Models\Announcement;
-use App\Models\JobPosition;
-use Faker\Provider\Uuid;
 
 class AnnouncementTest extends TestCase
 {

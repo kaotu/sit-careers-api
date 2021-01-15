@@ -5,7 +5,6 @@ namespace App\Repositories;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Announcement;
-use App\Models\JobPosition;
 use App\Models\JobType;
 
 class AnnouncementRepository implements AnnouncementRepositoryInterface
