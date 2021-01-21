@@ -29,4 +29,11 @@ class AnnouncementController extends Controller
         $announcements = $this->announcement->createAnnouncement($data);
         return response()->json($announcements, 200);
     }
+
+    public function update(Request $request)
+    {
+        $data = $request->all();
+        $announcement = $this->announcement->updateAnnouncement($data);
+        return response()->json($announcement, 200);
+    }
 }
