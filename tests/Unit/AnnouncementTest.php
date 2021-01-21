@@ -4,12 +4,11 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 
+use Faker\Provider\Uuid;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Models\Announcement;
-use App\Models\Company;
-use App\Models\JobPosition;
-use Faker\Provider\Uuid;
+use App\Models\JobType;
 
 class AnnouncementTest extends TestCase
 {
@@ -67,10 +66,6 @@ class AnnouncementTest extends TestCase
 
     public function test_update_announcement_success_should_return_announcement_that_has_been_updated()
     {
-        // $announcement = factory(Announcement::class)->create([
-        //     "company_id" => $this->faker->company_id,
-        // ]);
-
         $jobType = factory(JobType::class)->create([
             "announcement_id" => $this->fakerAnnouncement->announcement_id,
             "job_id" => Uuid::uuid()
@@ -79,6 +74,7 @@ class AnnouncementTest extends TestCase
         $data = [
             'announcement_id' => $this->fakerAnnouncement->announcement_id,
             'company_id' => $this->faker->company_id,
+            'announcement_title' => 'รับสมัครงานตำแหน่ง UX/UI',
             'job_description' => 'ต้องการ UX/UI',
             'job_position_id' => $this->fakerJobPosition->job_position_id,
             'property' => 'ขยันเป็นพอ',
@@ -91,14 +87,13 @@ class AnnouncementTest extends TestCase
         ];
 
         $response = $this->putJson('api/academic-industry', $data);
-        dd($response);
         $response->assertStatus(200);
 
         $response_arr = json_decode($response->content(), true);
         $announcement = Announcement::find($response_arr['announcement_id']);
         $announcement_arr = $announcement->toArray();
 
-        $this->assertEquals($announcement_arr['announcment_id'], $response_arr['announcement_id']);
+        $this->assertEquals($announcement_arr['announcement_id'], $response_arr['announcement_id']);
         $this->assertEquals($announcement_arr['job_description'], $response_arr['job_description']);
     }
 }
