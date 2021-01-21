@@ -45,7 +45,7 @@ class AnnouncementTest extends TestCase
         $this->assertEquals($announcement_arr, $response_arr['announcement_id']);
     }
 
-    public function test_post_announcement_fail_should_return_500()
+    public function test_post_announcement_fail_should_return_status_500()
     {
         $data = [
             'company_id' => $this->faker->company_id,
