@@ -65,4 +65,19 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
 
         return array_merge($announcement->toArray(), $jobType->toArray());
     }
+
+    public function deleteAnnouncementById($id)
+    {
+        $announcement = Announcement::find($id)->first();
+
+        $jobType = JobType::where('announcement_id', $id)->first();;
+
+        if($announcement && $jobType){
+            $deleted_announcement = $announcement->delete();
+            $deleted_jobType = $jobType->delete();
+            return $deleted_announcement && $deleted_jobType;
+        }
+
+        return "Find not found announcement or jobType";
+    }
 }

@@ -36,4 +36,11 @@ class AnnouncementController extends Controller
         $announcement = $this->announcement->updateAnnouncement($data);
         return response()->json($announcement, 200);
     }
+
+    public function destroy(Request $request)
+    {
+        $id = $request->all(['announcement_id']);
+        $announcement_deleted = $this->announcement->deleteAnnouncementById($id);
+        return response()->json($announcement_deleted, 200);
+    }
 }
