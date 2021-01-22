@@ -123,4 +123,19 @@ class AnnouncementTest extends TestCase
         $response = $this->putJson('api/academic-industry', $data);
         $response->assertStatus(500);
     }
+
+    public function test_delete_announcement_by_id_success_should_return_status_200()
+    {
+        $jobType = factory(JobType::class)->create([
+            "announcement_id" => $this->fakerAnnouncement->announcement_id,
+            "job_id" => Uuid::uuid()
+        ]);
+
+        $data = [
+            'announcement' => $this->fakerAnnouncement
+        ];
+
+        $response = $this->deleteJson('api/academic-industry', $data);
+        $response->assertStatus(200);
+    }
 }
