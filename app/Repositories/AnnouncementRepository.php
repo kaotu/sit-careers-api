@@ -78,6 +78,6 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
             return $deleted_announcement && $deleted_jobType;
         }
 
-        return "Find not found announcement or jobType";
+        return "Find not found announcement or job type.";
     }
 }

@@ -166,7 +166,7 @@ class AnnouncementTest extends TestCase
 
         $response_post_method = $this->postJson('api/academic-industry', $data_post);
 
-        $expected_announcement = 'Find not found announcement or jobType';
+        $expected_announcement = 'Find not found announcement or job type.';
 
         $response = $this->deleteJson('api/academic-industry', $data);
         $response_arr = json_decode($response->content(), true);
