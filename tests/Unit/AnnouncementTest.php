@@ -144,7 +144,7 @@ class AnnouncementTest extends TestCase
         $this->assertEquals($response_arr, $expected_announcement);
     }
 
-    public function test_delete_announcement_by_id_success_should_return_fail_message()
+    public function test_delete_announcement_by_id_fail_should_return_fail_message()
     {
         $data_post = [
             'company_id' => $this->faker->company_id,
@@ -172,6 +172,4 @@ class AnnouncementTest extends TestCase
         $response_arr = json_decode($response->content(), true);
         $this->assertEquals($response_arr, $expected_announcement);
     }
-
-    //Case wrong input data
 }
