@@ -124,18 +124,41 @@ class AnnouncementTest extends TestCase
         $response->assertStatus(500);
     }
 
-    public function test_delete_announcement_by_id_success_should_return_status_200()
+    public function test_delete_announcement_by_id_success_should_return_true()
     {
+        $data = $this->fakerAnnouncement;
+
+        $get_announcement_id = [
+            'announcement_id' => $data['announcement_id']
+        ];
+
         $jobType = factory(JobType::class)->create([
-            "announcement_id" => $this->fakerAnnouncement->announcement_id,
+            "announcement_id" => $data['announcement_id'],
             "job_id" => Uuid::uuid()
         ]);
 
-        $data = [
-            'announcement' => $this->fakerAnnouncement
-        ];
+        $expected_announcement = true;
 
-        $response = $this->deleteJson('api/academic-industry', $data);
-        $response->assertStatus(200);
+        $response = $this->deleteJson('api/academic-industry', $get_announcement_id);
+        $response_arr = json_decode($response->content(), true);
+        $this->assertEquals($response_arr, $expected_announcement);
     }
+
+    // public function test_delete_announcement_by_id_success_should_return_fail_message()
+    // {
+    //     $data = $this->fakerAnnouncement;
+
+    //     $get_announcement_id = [
+    //         'announcement_id' => $data['announcement_id']
+    //     ];
+
+    //     $jobType = factory(JobType::class)->create([
+    //         "announcement_id" => $this->fakerAnnouncement->announcement_id,
+    //         "job_id" => Uuid::uuid()
+    //     ]);
+
+    //     $response = $this->deleteJson('api/academic-industry', $get_announcement_id);
+    //     dd($response);
+    //     $response->assertStatus(500);
+    // }
 }
