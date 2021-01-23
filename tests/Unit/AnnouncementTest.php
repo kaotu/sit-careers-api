@@ -160,15 +160,15 @@ class AnnouncementTest extends TestCase
             'job_type' => 'WiL'
         ];
 
-        $data = [
+        $id = [
             'announcement_id' => $this->fakerAnnouncement->announcement_id
         ];
 
-        $response_post_method = $this->postJson('api/academic-industry', $data_post);
+        $response_post_method = $this->postJson('api/academic-industry', $id);
 
         $expected_announcement = 'Find not found announcement or job type.';
 
-        $response = $this->deleteJson('api/academic-industry', $data);
+        $response = $this->deleteJson('api/academic-industry', $id);
         $response_arr = json_decode($response->content(), true);
         $this->assertEquals($response_arr, $expected_announcement);
     }
