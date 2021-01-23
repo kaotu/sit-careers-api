@@ -128,14 +128,14 @@ class AnnouncementTest extends TestCase
     {
         $data = $this->fakerAnnouncement;
 
-        $get_announcement_id = [
-            'announcement_id' => $data['announcement_id'],
-        ];
-
         $jobType = factory(JobType::class)->create([
             "announcement_id" => $data['announcement_id'],
             "job_id" => Uuid::uuid()
         ]);
+
+        $get_announcement_id = [
+            'announcement_id' => $data['announcement_id'],
+        ];
 
         $expected_announcement = true;
 
