@@ -171,7 +171,7 @@ class CompanyTest extends TestCase
                 "The e mail manager has already been taken."
             ]
         ];
-            
+
         $response->assertStatus(400);
         $this->assertEquals($assertion, $expect);
     }
@@ -201,5 +201,29 @@ class CompanyTest extends TestCase
 
         $response = $this->putJson('api/company', $data);
         $response->assertStatus(500);
+    }
+
+    public function test_delete_company_by_id_success_should_return_true()
+    {
+        $data = $this->faker;
+
+        $address = factory(Address::class)->create([
+            "company_id" => $this->faker->company_id,
+            "address_id" => Uuid::uuid()
+        ]);
+
+        $mou = factory(MOU::class)->create([
+            "company_id" => $this->faker->company_id,
+            "mou_id" => Uuid::uuid()
+        ]);
+
+        $get_company_id = [
+            'company_id' => $data['company_id'],
+        ];
+
+        $expected_company = true;
+        $response = $this->deleteJson('api/company', $get_company_id);
+        $response_arr = json_decode($response->content(), true);
+        $this->assertEquals($response_arr, $expected_company);
     }
 }
