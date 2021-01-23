@@ -129,7 +129,7 @@ class AnnouncementTest extends TestCase
         $data = $this->fakerAnnouncement;
 
         $get_announcement_id = [
-            'announcement_id' => $data['announcement_id']
+            'announcement_id' => $data['announcement_id'],
         ];
 
         $jobType = factory(JobType::class)->create([
@@ -144,21 +144,34 @@ class AnnouncementTest extends TestCase
         $this->assertEquals($response_arr, $expected_announcement);
     }
 
-    // public function test_delete_announcement_by_id_success_should_return_fail_message()
-    // {
-    //     $data = $this->fakerAnnouncement;
+    public function test_delete_announcement_by_id_success_should_return_fail_message()
+    {
+        $data_post = [
+            'company_id' => $this->faker->company_id,
+            'announcement_title' => 'รับสมัครงานตำแหน่ง Software Engineer',
+            'job_description' => 'เป็นซอฟ์ตแวร์เอน เอนแบบเอนเตอร์เทน',
+            'job_position_id' => $this->fakerJobPosition->job_position_id,
+            'property' => 'ขยันเป็นพอ',
+            'picture' => 'path/picture',
+            'start_date' => '2021-01-10 13:00:00',
+            'end_date' => '2021-03-31 17:00:00',
+            'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
+            'status' => 'เปิดรับสมัคร',
+            'job_type' => 'WiL'
+        ];
 
-    //     $get_announcement_id = [
-    //         'announcement_id' => $data['announcement_id']
-    //     ];
+        $data = [
+            'announcement_id' => $this->fakerAnnouncement->announcement_id
+        ];
 
-    //     $jobType = factory(JobType::class)->create([
-    //         "announcement_id" => $this->fakerAnnouncement->announcement_id,
-    //         "job_id" => Uuid::uuid()
-    //     ]);
+        $response_post_method = $this->postJson('api/academic-industry', $data_post);
 
-    //     $response = $this->deleteJson('api/academic-industry', $get_announcement_id);
-    //     dd($response);
-    //     $response->assertStatus(500);
-    // }
+        $expected_announcement = 'Find not found announcement or jobType';
+
+        $response = $this->deleteJson('api/academic-industry', $data);
+        $response_arr = json_decode($response->content(), true);
+        $this->assertEquals($response_arr, $expected_announcement);
+    }
+
+    //Case wrong input data
 }
