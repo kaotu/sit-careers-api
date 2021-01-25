@@ -171,7 +171,7 @@ class CompanyTest extends TestCase
                 "The e mail manager has already been taken."
             ]
         ];
-            
+
         $response->assertStatus(400);
         $this->assertEquals($assertion, $expect);
     }
@@ -201,5 +201,75 @@ class CompanyTest extends TestCase
 
         $response = $this->putJson('api/company', $data);
         $response->assertStatus(500);
+    }
+
+    public function test_delete_company_by_id_success_should_return_true()
+    {
+        $data = $this->faker;
+
+        $address = factory(Address::class)->create([
+            "company_id" => $this->faker->company_id,
+            "address_id" => Uuid::uuid()
+        ]);
+
+        $mou = factory(MOU::class)->create([
+            "company_id" => $this->faker->company_id,
+            "mou_id" => Uuid::uuid()
+        ]);
+
+        $get_company_id = [
+            'company_id' => $data['company_id'],
+        ];
+
+        $expected_company = true;
+        $response = $this->deleteJson('api/company', $get_company_id);
+        $response_arr = json_decode($response->content(), true);
+        $this->assertEquals($response_arr, $expected_company);
+    }
+
+    public function test_delete_company_by_id_fail_should_return_fail_message()
+    {
+        $data_post = [
+            'company_id' => $this->faker->company_id,
+            'company_name_th' => 'บริษัท เทส จำกัด',
+            'company_name_en' => 'Test COmpany',
+            'description' => 'เป็นบริษัทพัฒนา software บริษัทใหญ่ อยู่เยอรมัน',
+            'about_us' => 'อยากเท่ อยากเจ๋ง มาเข้าบริษัทนี้',
+            'company_image_logo' => '',
+            'logo' => '',
+            'company_type' => 'Technology',
+            'start_business_day' => 'จันทร์',
+            'end_business_day' => 'ศุกร์',
+            'start_business_time' => '07:00',
+            'end_business_time' => '18:00',
+            'e_mail_coordinator' => 'test1@gmail.com',
+            'e_mail_manager' => 'company1@gmail.com',
+            'tel_no' => '0988882356',
+            'phone_no' => '0298987640',
+            'website' => 'http://test.com',
+            "address_one" => "138/2 หอพักสตรีพสิษฐ์",
+            "address_two" => "-",
+            "lane" => "2",
+            "road" => "วิภาวดีรังสิต",
+            "sub_district" => "ดินแดง",
+            "district" => "ดินแดง",
+            "province" => "กรุงเทพ",
+            "postal_code" => "10400",
+            "mou_type" => "ชนิด MOU",
+            "mou_link" => "https://www.google.co.th",
+            "contact_period" => "30 กันยายน 2563 - 30 กันยายน 2565"
+        ];
+
+        $id = [
+            'company_id' => $this->faker->company_id
+        ];
+
+        $response_post_method = $this->postJson('api/company', $id);
+
+        $expected_company = 'Find not found company or mou or address.';
+
+        $response = $this->deleteJson('api/company', $id);
+        $response_arr = json_decode($response->content(), true);
+        $this->assertEquals($response_arr, $expected_company);
     }
 }

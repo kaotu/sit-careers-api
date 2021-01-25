@@ -123,4 +123,53 @@ class AnnouncementTest extends TestCase
         $response = $this->putJson('api/academic-industry', $data);
         $response->assertStatus(500);
     }
+
+    public function test_delete_announcement_by_id_success_should_return_true()
+    {
+        $data = $this->fakerAnnouncement;
+
+        $jobType = factory(JobType::class)->create([
+            "announcement_id" => $data['announcement_id'],
+            "job_id" => Uuid::uuid()
+        ]);
+
+        $get_announcement_id = [
+            'announcement_id' => $data['announcement_id'],
+        ];
+
+        $expected_announcement = true;
+
+        $response = $this->deleteJson('api/academic-industry', $get_announcement_id);
+        $response_arr = json_decode($response->content(), true);
+        $this->assertEquals($response_arr, $expected_announcement);
+    }
+
+    public function test_delete_announcement_by_id_fail_should_return_fail_message()
+    {
+        $data_post = [
+            'company_id' => $this->faker->company_id,
+            'announcement_title' => 'รับสมัครงานตำแหน่ง Software Engineer',
+            'job_description' => 'เป็นซอฟ์ตแวร์เอน เอนแบบเอนเตอร์เทน',
+            'job_position_id' => $this->fakerJobPosition->job_position_id,
+            'property' => 'ขยันเป็นพอ',
+            'picture' => 'path/picture',
+            'start_date' => '2021-01-10 13:00:00',
+            'end_date' => '2021-03-31 17:00:00',
+            'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
+            'status' => 'เปิดรับสมัคร',
+            'job_type' => 'WiL'
+        ];
+
+        $id = [
+            'announcement_id' => $this->fakerAnnouncement->announcement_id
+        ];
+
+        $response_post_method = $this->postJson('api/academic-industry', $id);
+
+        $expected_announcement = 'Find not found announcement or job type.';
+
+        $response = $this->deleteJson('api/academic-industry', $id);
+        $response_arr = json_decode($response->content(), true);
+        $this->assertEquals($response_arr, $expected_announcement);
+    }
 }
