@@ -35,4 +35,9 @@ class Company extends Model
     {
         return $this->hasOne('App\Model\Announcement', 'announcement_id');
     }
+
+    public function business_days()
+    {
+        return $this->hasMany('App\Models\Address', 'business_day_id');
+    }
 }
