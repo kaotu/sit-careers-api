@@ -54,6 +54,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $announcement->picture = $data['picture'];
         $announcement->start_date = $data['start_date'];
         $announcement->end_date = $data['end_date'];
+        $announcement->salary = $data['salary'];
         $announcement->welfare = $data['welfare'];
         $announcement->status = $data['status'];
         $announcement->updated_at = Carbon::now();
