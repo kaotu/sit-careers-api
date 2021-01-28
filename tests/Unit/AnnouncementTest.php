@@ -30,6 +30,7 @@ class AnnouncementTest extends TestCase
             'picture' => 'path/picture',
             'start_date' => '2021-01-10 13:00:00',
             'end_date' => '2021-03-31 17:00:00',
+            'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
             'job_type' => 'WiL'
@@ -56,6 +57,7 @@ class AnnouncementTest extends TestCase
             'picture' => 'path/picture',
             'start_date' => '2021-01-10 13:00:00',
             'end_date' => '2021-03-31 17:00:00',
+            'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
             'job_type' => 'WiL'
@@ -82,6 +84,7 @@ class AnnouncementTest extends TestCase
             'picture' => 'path/picture',
             'start_date' => '2021-01-10 13:00:00',
             'end_date' => '2021-03-31 17:00:00',
+            'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
             'job_type' => 'WiL'
@@ -115,6 +118,7 @@ class AnnouncementTest extends TestCase
             'picture' => 'path/picture',
             'start_date' => '2021-01-10 13:00:00',
             'end_date' => '2021-03-31 17:00:00',
+            'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
             'job_type' => 'WiL'
@@ -155,6 +159,7 @@ class AnnouncementTest extends TestCase
             'picture' => 'path/picture',
             'start_date' => '2021-01-10 13:00:00',
             'end_date' => '2021-03-31 17:00:00',
+            'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
             'job_type' => 'WiL'
