@@ -33,7 +33,12 @@ class AnnouncementTest extends TestCase
             'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
-            'job_type' => 'WiL'
+            'job_type' => 'WiL',
+            'business_day_type' => $this->fakerBusinessDay->business_day_type,
+            'start_business_day' => $this->fakerBusinessDay->start_business_day,
+            'end_business_day' => $this->fakerBusinessDay->end_business_day,
+            'start_business_time' => $this->fakerBusinessDay->start_business_time,
+            'end_business_time' => $this->fakerBusinessDay->end_business_time,
         ];
 
         $response = $this->postJson('api/academic-industry', $data);
