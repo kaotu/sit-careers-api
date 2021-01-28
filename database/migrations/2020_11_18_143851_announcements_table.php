@@ -23,6 +23,7 @@ class AnnouncementsTable extends Migration
             $table->string('picture');
             $table->date('start_date');
             $table->date('end_date');
+            $table->string('salary');
             $table->string('welfare');
             $table->string('status');
             $table->timestamps();
