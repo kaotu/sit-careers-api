@@ -5,6 +5,7 @@ namespace App\Repositories;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Announcement;
+use App\Models\BusinessDays;
 use App\Models\JobType;
 use Carbon\Carbon;
 
@@ -40,7 +41,16 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $jobType->job_type = $data['job_type'];
         $jobType->save();
 
-        return array_merge($announcement->toArray(), $jobType->toArray());
+        $businessDay = new BusinessDays();
+        $businessDay->company_id = $announcement->company_id;
+        $businessDay->business_day_type = $data['business_day_type'];
+        $businessDay->start_business_day = $data['start_business_day'];
+        $businessDay->end_business_day = $data['end_business_day'];
+        $businessDay->start_business_time = $data['start_business_time'];
+        $businessDay->end_business_time = $data['end_business_time'];
+        $businessDay->save();
+
+        return array_merge($announcement->toArray(), $jobType->toArray(), $businessDay->toArray());
     }
 
     public function updateAnnouncement($data)
