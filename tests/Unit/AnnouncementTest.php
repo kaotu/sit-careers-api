@@ -8,6 +8,7 @@ use Faker\Provider\Uuid;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Models\Announcement;
+use App\Models\BusinessDays;
 use App\Models\JobType;
 
 class AnnouncementTest extends TestCase
@@ -65,7 +66,12 @@ class AnnouncementTest extends TestCase
             'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
-            'job_type' => 'WiL'
+            'job_type' => 'WiL',
+            'business_day_type' => $this->fakerBusinessDay->business_day_type,
+            'start_business_day' => $this->fakerBusinessDay->start_business_day,
+            'end_business_day' => $this->fakerBusinessDay->end_business_day,
+            'start_business_time' => $this->fakerBusinessDay->start_business_time,
+            'end_business_time' => $this->fakerBusinessDay->end_business_time,
         ];
 
         $response = $this->postJson('api/academic-industry', $data);
@@ -77,6 +83,14 @@ class AnnouncementTest extends TestCase
         $jobType = factory(JobType::class)->create([
             "announcement_id" => $this->fakerAnnouncement->announcement_id,
             "job_id" => Uuid::uuid()
+        ]);
+
+        $businessDay = factory(BusinessDays::class)->create([
+            "company_id" => $this->faker->company_id,
+            'start_business_day' => $this->fakerBusinessDay->start_business_day,
+            'end_business_day' => $this->fakerBusinessDay->end_business_day,
+            'start_business_time' => $this->fakerBusinessDay->start_business_time,
+            'end_business_time' => $this->fakerBusinessDay->end_business_time,
         ]);
 
         $data = [
@@ -92,7 +106,11 @@ class AnnouncementTest extends TestCase
             'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
-            'job_type' => 'WiL'
+            'job_type' => 'WiL',
+            'start_business_day' => $this->fakerBusinessDay->start_business_day,
+            'end_business_day' => $this->fakerBusinessDay->end_business_day,
+            'start_business_time' => '07:00',
+            'end_business_time' => '19:00',
         ];
 
         $response = $this->putJson('api/academic-industry', $data);
