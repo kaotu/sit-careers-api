@@ -46,5 +46,9 @@ class AnnouncementsTable extends Migration
         Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('announcements');
         Schema::enableForeignKeyConstraints();
+
+        Schema::table('announcements', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }

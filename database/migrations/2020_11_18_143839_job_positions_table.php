@@ -29,5 +29,9 @@ class JobPositionsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('job_positions');
+
+        Schema::table('job_positions', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }

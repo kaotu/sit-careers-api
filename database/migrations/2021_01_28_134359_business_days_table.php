@@ -40,5 +40,9 @@ class BusinessDaysTable extends Migration
         Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('business_days');
         Schema::enableForeignKeyConstraints();
+
+        Schema::table('business_days', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }
