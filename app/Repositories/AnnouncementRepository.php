@@ -72,10 +72,16 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
 
         $jobType = JobType::where('announcement_id', $data['announcement_id'])->first();
         $jobType->job_type = $data['job_type'];
-        $announcement->updated_at = Carbon::now();
         $jobType->save();
 
-        return array_merge($announcement->toArray(), $jobType->toArray());
+        $businessDay = BusinessDays::where('company_id', $data['company_id'])->first();
+        $businessDay->start_business_day = $data['start_business_day'];
+        $businessDay->end_business_day = $data['end_business_day'];
+        $businessDay->start_business_time = $data['start_business_time'];
+        $businessDay->end_business_time = $data['end_business_time'];
+        $businessDay->save();
+
+        return array_merge($announcement->toArray(), $jobType->toArray(), $businessDay->toArray());
     }
 
     public function deleteAnnouncementById($id)
