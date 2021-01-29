@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Announcement;
 use App\Models\BusinessDays;
+use App\Models\JobPosition;
 use App\Models\JobType;
 use Carbon\Carbon;
 
@@ -13,10 +14,11 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
 {
     public function getAllAnnouncements()
     {
-        $announcement = DB::table('announcements')
-        ->join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
-        ->join('job_types', 'job_types.announcement_id', '=', 'announcements.announcement_id')
-        ->get();
+        $announcement = Announcement::join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
+                        ->join('job_types', 'job_types.announcement_id', '=', 'announcements.announcement_id')
+                        ->join('business_days', 'business_days.company_id', '=', 'announcements.company_id')
+                        ->get();
+
         return $announcement;
     }
 
