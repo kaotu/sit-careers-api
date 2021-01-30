@@ -17,7 +17,7 @@ class AnnouncementTest extends TestCase
 
     public function test_get_all_announcements_success_should_return_status_200()
     {
-        $this->get('api/academic-industry')->assertStatus(200);
+        $this->get('api/academic-industries')->assertStatus(200);
     }
 
     public function test_post_announcement_success_should_return_announcement()
