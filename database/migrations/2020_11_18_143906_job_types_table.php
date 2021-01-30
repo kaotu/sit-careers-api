@@ -36,5 +36,9 @@ class JobTypesTable extends Migration
         Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('job_types');
         Schema::enableForeignKeyConstraints();
+
+        Schema::table('job_types', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }

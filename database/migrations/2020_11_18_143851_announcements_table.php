@@ -23,6 +23,7 @@ class AnnouncementsTable extends Migration
             $table->string('picture');
             $table->date('start_date');
             $table->date('end_date');
+            $table->string('salary');
             $table->string('welfare');
             $table->string('status');
             $table->timestamps();
@@ -45,5 +46,9 @@ class AnnouncementsTable extends Migration
         Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('announcements');
         Schema::enableForeignKeyConstraints();
+
+        Schema::table('announcements', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }

@@ -16,11 +16,18 @@ class AnnouncementController extends Controller
         $this->announcement = $announcement_repo;
     }
 
-    public function getAnnouncements(Request $request)
+    public function get(Request $request)
     {
         $id = $request->all();
-        $announcement = $this->announcement->getAllAnnouncements();
+        $announcement = $this->announcement->getAnnouncementById($id['announcement_id']);
         return response()->json($announcement, 200);
+    }
+
+    public function getAnnouncements(Request $request)
+    {
+        $announcements = $request->all();
+        $announcements = $this->announcement->getAllAnnouncements();
+        return response()->json($announcements, 200);
     }
 
     public function create(Request $request)

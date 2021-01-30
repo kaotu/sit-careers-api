@@ -21,6 +21,7 @@ $factory->define(Announcement::class, function (Faker $faker) use ($factory) {
         'picture' => 'path/picture',
         'start_date' => '2021-01-10 13:00:00',
         'end_date' => '2021-02-10 18:00:00',
+        'salary' => '28,000',
         'welfare' => 'มีเงินเดือนให้',
         'status' => 'เปิดรับสมัคร'
     ];

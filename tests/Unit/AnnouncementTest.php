@@ -8,6 +8,7 @@ use Faker\Provider\Uuid;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Models\Announcement;
+use App\Models\BusinessDays;
 use App\Models\JobType;
 
 class AnnouncementTest extends TestCase
@@ -16,7 +17,7 @@ class AnnouncementTest extends TestCase
 
     public function test_get_all_announcements_success_should_return_status_200()
     {
-        $this->get('api/academic-industry')->assertStatus(200);
+        $this->get('api/academic-industries')->assertStatus(200);
     }
 
     public function test_post_announcement_success_should_return_announcement()
@@ -30,9 +31,15 @@ class AnnouncementTest extends TestCase
             'picture' => 'path/picture',
             'start_date' => '2021-01-10 13:00:00',
             'end_date' => '2021-03-31 17:00:00',
+            'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
-            'job_type' => 'WiL'
+            'job_type' => 'WiL',
+            'business_day_type' => $this->fakerBusinessDay->business_day_type,
+            'start_business_day' => $this->fakerBusinessDay->start_business_day,
+            'end_business_day' => $this->fakerBusinessDay->end_business_day,
+            'start_business_time' => $this->fakerBusinessDay->start_business_time,
+            'end_business_time' => $this->fakerBusinessDay->end_business_time,
         ];
 
         $response = $this->postJson('api/academic-industry', $data);
@@ -56,9 +63,15 @@ class AnnouncementTest extends TestCase
             'picture' => 'path/picture',
             'start_date' => '2021-01-10 13:00:00',
             'end_date' => '2021-03-31 17:00:00',
+            'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
-            'job_type' => 'WiL'
+            'job_type' => 'WiL',
+            'business_day_type' => $this->fakerBusinessDay->business_day_type,
+            'start_business_day' => $this->fakerBusinessDay->start_business_day,
+            'end_business_day' => $this->fakerBusinessDay->end_business_day,
+            'start_business_time' => $this->fakerBusinessDay->start_business_time,
+            'end_business_time' => $this->fakerBusinessDay->end_business_time,
         ];
 
         $response = $this->postJson('api/academic-industry', $data);
@@ -72,6 +85,14 @@ class AnnouncementTest extends TestCase
             "job_id" => Uuid::uuid()
         ]);
 
+        $businessDay = factory(BusinessDays::class)->create([
+            "company_id" => $this->faker->company_id,
+            'start_business_day' => $this->fakerBusinessDay->start_business_day,
+            'end_business_day' => $this->fakerBusinessDay->end_business_day,
+            'start_business_time' => $this->fakerBusinessDay->start_business_time,
+            'end_business_time' => $this->fakerBusinessDay->end_business_time,
+        ]);
+
         $data = [
             'announcement_id' => $this->fakerAnnouncement->announcement_id,
             'company_id' => $this->faker->company_id,
@@ -82,9 +103,14 @@ class AnnouncementTest extends TestCase
             'picture' => 'path/picture',
             'start_date' => '2021-01-10 13:00:00',
             'end_date' => '2021-03-31 17:00:00',
+            'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
-            'job_type' => 'WiL'
+            'job_type' => 'WiL',
+            'start_business_day' => $this->fakerBusinessDay->start_business_day,
+            'end_business_day' => $this->fakerBusinessDay->end_business_day,
+            'start_business_time' => '07:00',
+            'end_business_time' => '19:00',
         ];
 
         $response = $this->putJson('api/academic-industry', $data);
@@ -115,6 +141,7 @@ class AnnouncementTest extends TestCase
             'picture' => 'path/picture',
             'start_date' => '2021-01-10 13:00:00',
             'end_date' => '2021-03-31 17:00:00',
+            'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
             'job_type' => 'WiL'
@@ -155,6 +182,7 @@ class AnnouncementTest extends TestCase
             'picture' => 'path/picture',
             'start_date' => '2021-01-10 13:00:00',
             'end_date' => '2021-03-31 17:00:00',
+            'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
             'job_type' => 'WiL'
