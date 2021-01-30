@@ -54,7 +54,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
 
         $businessDay = new BusinessDays();
         $businessDay->company_id = $announcement->company_id;
-        $businessDay->business_day_type = $data['business_day_type'];
+        $businessDay->business_day_type = 'announcement';
         $businessDay->start_business_day = $data['start_business_day'];
         $businessDay->end_business_day = $data['end_business_day'];
         $businessDay->start_business_time = $data['start_business_time'];
