@@ -18,15 +18,9 @@ class AnnouncementController extends Controller
 
     public function get(Request $request)
     {
-        //Get id from QueryString
-        $id = $request['announcement_id'];
-        $announcement = $this->announcement->getAnnouncementById($id);
+        $id = $request->all();
+        $announcement = $this->announcement->getAnnouncementById($id['announcement_id']);
         return response()->json($announcement, 200);
-
-        //Get id from body
-        // $id = $request->all();
-        // $announcement = $this->announcement->getAnnouncementById($id['announcement_id']);
-        // return response()->json($announcement, 200);
     }
 
     public function getAnnouncements(Request $request)
