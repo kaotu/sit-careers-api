@@ -23,8 +23,8 @@ Route::post('company', 'CompanyController@create');
 Route::put('company', 'CompanyController@update');
 Route::delete('company', 'CompanyController@destroy');
 
-Route::get('academic-industries', 'AnnouncementController@get');
-Route::get('academic-industry', 'AnnouncementController@getAnnouncements');
+Route::get('academic-industry', 'AnnouncementController@get');
+Route::get('academic-industries', 'AnnouncementController@getAnnouncements');
 Route::post('academic-industry', 'AnnouncementController@create');
 Route::put('academic-industry', 'AnnouncementController@update');
 Route::delete('academic-industry', 'AnnouncementController@destroy');
