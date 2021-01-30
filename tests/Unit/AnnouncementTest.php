@@ -17,7 +17,7 @@ class AnnouncementTest extends TestCase
 
     public function test_get_all_announcements_success_should_return_status_200()
     {
-        $this->get('api/academic-industries')->assertStatus(200);
+        $this->get('api/academic-industry/announcements')->assertStatus(200);
     }
 
     public function test_post_announcement_success_should_return_announcement()
@@ -42,7 +42,7 @@ class AnnouncementTest extends TestCase
             'end_business_time' => $this->fakerBusinessDay->end_business_time,
         ];
 
-        $response = $this->postJson('api/academic-industry', $data);
+        $response = $this->postJson('api/academic-industry/announcement', $data);
         $response->assertStatus(200);
 
         $response_arr = json_decode($response->content(), true);
@@ -74,7 +74,7 @@ class AnnouncementTest extends TestCase
             'end_business_time' => $this->fakerBusinessDay->end_business_time,
         ];
 
-        $response = $this->postJson('api/academic-industry', $data);
+        $response = $this->postJson('api/academic-industry/announcement', $data);
         $response->assertStatus(500);
     }
 
@@ -113,7 +113,7 @@ class AnnouncementTest extends TestCase
             'end_business_time' => '19:00',
         ];
 
-        $response = $this->putJson('api/academic-industry', $data);
+        $response = $this->putJson('api/academic-industry/announcement', $data);
         $response->assertStatus(200);
 
         $response_arr = json_decode($response->content(), true);
@@ -147,7 +147,7 @@ class AnnouncementTest extends TestCase
             'job_type' => 'WiL'
         ];
 
-        $response = $this->putJson('api/academic-industry', $data);
+        $response = $this->putJson('api/academic-industry/announcement', $data);
         $response->assertStatus(500);
     }
 
@@ -166,7 +166,7 @@ class AnnouncementTest extends TestCase
 
         $expected_announcement = true;
 
-        $response = $this->deleteJson('api/academic-industry', $get_announcement_id);
+        $response = $this->deleteJson('api/academic-industry/announcement', $get_announcement_id);
         $response_arr = json_decode($response->content(), true);
         $this->assertEquals($response_arr, $expected_announcement);
     }
@@ -192,11 +192,11 @@ class AnnouncementTest extends TestCase
             'announcement_id' => $this->fakerAnnouncement->announcement_id
         ];
 
-        $response_post_method = $this->postJson('api/academic-industry', $id);
+        $response_post_method = $this->postJson('api/academic-industry/announcement', $id);
 
         $expected_announcement = 'Find not found announcement or job type.';
 
-        $response = $this->deleteJson('api/academic-industry', $id);
+        $response = $this->deleteJson('api/academic-industry/announcement', $id);
         $response_arr = json_decode($response->content(), true);
         $this->assertEquals($response_arr, $expected_announcement);
     }
