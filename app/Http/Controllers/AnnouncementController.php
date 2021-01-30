@@ -31,9 +31,9 @@ class AnnouncementController extends Controller
 
     public function getAnnouncements(Request $request)
     {
-        $announcement = $request->all();
-        $announcement = $this->announcement->getAllAnnouncements();
-        return response()->json($announcement, 200);
+        $announcements = $request->all();
+        $announcements = $this->announcement->getAllAnnouncements();
+        return response()->json($announcements, 200);
     }
 
     public function create(Request $request)
