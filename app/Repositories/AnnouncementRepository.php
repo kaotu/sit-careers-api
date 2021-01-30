@@ -28,7 +28,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
                         ->join('job_types', 'job_types.announcement_id', '=', 'announcements.announcement_id')
                         ->join('business_days', 'business_days.company_id', '=', 'announcements.company_id')
                         ->get();
-        return $announcement;
+        return $announcements;
     }
 
     public function createAnnouncement($data)
