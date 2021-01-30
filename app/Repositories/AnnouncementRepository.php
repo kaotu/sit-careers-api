@@ -24,7 +24,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
 
     public function getAllAnnouncements()
     {
-        $announcement = Announcement::join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
+        $announcements = Announcement::join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
                         ->join('job_types', 'job_types.announcement_id', '=', 'announcements.announcement_id')
                         ->join('business_days', 'business_days.company_id', '=', 'announcements.company_id')
                         ->get();
