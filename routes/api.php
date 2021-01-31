@@ -23,11 +23,13 @@ Route::post('company', 'CompanyController@create');
 Route::put('company', 'CompanyController@update');
 Route::delete('company', 'CompanyController@destroy');
 
-Route::get('academic-industry', 'AnnouncementController@get');
-Route::get('academic-industries', 'AnnouncementController@getAnnouncements');
-Route::post('academic-industry', 'AnnouncementController@create');
-Route::put('academic-industry', 'AnnouncementController@update');
-Route::delete('academic-industry', 'AnnouncementController@destroy');
+Route::prefix('academic-industry')->group(function () {
+    Route::get('announcement', 'AnnouncementController@get');
+    Route::get('announcements', 'AnnouncementController@getAnnouncements');
+    Route::post('announcement', 'AnnouncementController@create');
+    Route::put('announcement', 'AnnouncementController@update');
+    Route::delete('announcement', 'AnnouncementController@destroy');
+});
 
 // keep for dashboard feature
 Route::get('companies', 'CompanyController@getCompanies');

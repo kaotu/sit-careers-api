@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Company;
 use App\Models\Address;
+use App\Models\BusinessDays;
 use App\Models\MOU;
 
 class CompanyRepository implements CompanyRepositoryInterface
@@ -18,6 +19,7 @@ class CompanyRepository implements CompanyRepositoryInterface
         $company = DB::table('companies')
         ->join('mou', 'mou.company_id', '=', 'companies.company_id')
         ->join('addresses', 'addresses.company_id', '=', 'companies.company_id')
+        ->join('business_days', 'business_days.company_id', '=', 'companies.company_id')
         ->where('companies.company_id', $id)
         ->first();
         return $company;
@@ -28,6 +30,7 @@ class CompanyRepository implements CompanyRepositoryInterface
         $companies = DB::table('companies')
             ->join('mou', 'mou.company_id', '=', 'companies.company_id')
             ->join('addresses', 'addresses.company_id', '=', 'companies.company_id')
+            ->join('business_days', 'business_days.company_id', '=', 'companies.company_id')
             ->get();
         return $companies;
     }
@@ -43,10 +46,6 @@ class CompanyRepository implements CompanyRepositoryInterface
         $company->logo = $data['logo'] == "" ? "-": $data['logo'];
         $company->e_mail_manager = $data['e_mail_manager'];
         $company->e_mail_coordinator = $data['e_mail_coordinator'];
-        $company->start_business_day = $data['start_business_day'];
-        $company->end_business_day = $data['end_business_day'];
-        $company->start_business_time = $data['start_business_time'];
-        $company->end_business_time = $data['end_business_time'];
         $company->tel_no = $data['tel_no'] == "" ? "-": $data['tel_no'];
         $company->phone_no = $data['phone_no'] == "" ? "-": $data['phone_no'];
         $company->website = $data['website'] == "" ? "-": $data['website'];
@@ -61,6 +60,7 @@ class CompanyRepository implements CompanyRepositoryInterface
         $address->district = $data['district'];
         $address->province = $data['province'];
         $address->postal_code = $data['postal_code'];
+        $address->address_type = 'company';
         $address->company_id = $company->company_id;
         $address->save();
 
@@ -71,7 +71,16 @@ class CompanyRepository implements CompanyRepositoryInterface
         $mou->contact_period = $data['contact_period'] == "" ? "-": $data['contact_period'];
         $mou->save();
 
-        return array_merge($company->toArray(),  $address->toArray(), $mou->toArray());
+        $businessDay = new BusinessDays();
+        $businessDay->company_id = $company->company_id;
+        $businessDay->business_day_type = 'company';
+        $businessDay->start_business_day = $data['start_business_day'];
+        $businessDay->end_business_day = $data['end_business_day'];
+        $businessDay->start_business_time = $data['start_business_time'];
+        $businessDay->end_business_time = $data['end_business_time'];
+        $businessDay->save();
+
+        return array_merge($company->toArray(),  $address->toArray(), $mou->toArray(), $businessDay->toArray());
     }
 
     public function updateCompanyById($data)
@@ -87,10 +96,6 @@ class CompanyRepository implements CompanyRepositoryInterface
         $company->logo = $data['logo'] == "" ? "-": $data['logo'];
         $company->e_mail_manager = $data['e_mail_manager'];
         $company->e_mail_coordinator = $data['e_mail_coordinator'];
-        $company->start_business_day = $data['start_business_day'];
-        $company->end_business_day = $data['end_business_day'];
-        $company->start_business_time = $data['start_business_time'];
-        $company->end_business_time = $data['end_business_time'];
         $company->tel_no = $data['tel_no'] == "" ? "-": $data['tel_no'];
         $company->phone_no = $data['phone_no'] == "" ? "-": $data['phone_no'];
         $company->website = $data['website'] == "" ? "-": $data['website'];
@@ -115,7 +120,14 @@ class CompanyRepository implements CompanyRepositoryInterface
         $mou->contact_period = $data['contact_period'] == "" ? "-": $data['contact_period'];
         $mou->save();
 
-        return array_merge($company->toArray(),  $address->toArray(), $mou->toArray());
+        $businessDay = BusinessDays::where('company_id', $id)->first();
+        $businessDay->start_business_day = $data['start_business_day'];
+        $businessDay->end_business_day = $data['end_business_day'];
+        $businessDay->start_business_time = $data['start_business_time'];
+        $businessDay->end_business_time = $data['end_business_time'];
+        $businessDay->save();
+
+        return array_merge($company->toArray(),  $address->toArray(), $mou->toArray(), $businessDay->toArray());
     }
 
     public function deleteCompanyById($id)
