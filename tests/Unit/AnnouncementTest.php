@@ -28,7 +28,7 @@ class AnnouncementTest extends TestCase
             'job_description' => 'เป็นซอฟ์ตแวร์เอน เอนแบบเอนเตอร์เทน',
             'job_position_id' => $this->fakerJobPosition->job_position_id,
             'property' => 'ขยันเป็นพอ',
-            'picture' => 'path/picture',
+            'picture' => '',
             'start_date' => '2021-01-10 13:00:00',
             'end_date' => '2021-03-31 17:00:00',
             'salary' => '30,000',
@@ -52,15 +52,14 @@ class AnnouncementTest extends TestCase
         $this->assertEquals($announcement_arr, $response_arr['announcement_id']);
     }
 
-    public function test_post_announcement_fail_should_return_status_500()
+    public function test_post_announcement_fail_should_return_error_message()
     {
-        //Filed announcement_title missing
+        //Filed announcement_title and property are missing
         $data = [
             'company_id' => $this->faker->company_id,
             'job_description' => 'เป็นซอฟ์ตแวร์เอน เอนแบบเอนเตอร์เทน',
             'job_position_id' => $this->fakerJobPosition->job_position_id,
-            'property' => 'ขยันเป็นพอ',
-            'picture' => 'path/picture',
+            'picture' => '',
             'start_date' => '2021-01-10 13:00:00',
             'end_date' => '2021-03-31 17:00:00',
             'salary' => '30,000',
@@ -75,7 +74,19 @@ class AnnouncementTest extends TestCase
         ];
 
         $response = $this->postJson('api/academic-industry/announcement', $data);
-        $response->assertStatus(500);
+        $expected = json_decode($response->content(), true);
+
+        $assertion = [
+            "announcement_title" => [
+                "The announcement title field is required."
+            ],
+            "property" => [
+                "The property field is required."
+            ]
+        ];
+
+        $response->assertStatus(400);
+        $this->assertEquals($assertion, $expected);
     }
 
     public function test_update_announcement_success_should_return_announcement_that_has_been_updated()
@@ -124,7 +135,7 @@ class AnnouncementTest extends TestCase
         $this->assertEquals($announcement_arr['job_description'], $response_arr['job_description']);
     }
 
-    public function test_update_announcement_fail_should_return_status_500()
+    public function test_update_announcement_fail_should_return_error_message()
     {
         $jobType = factory(JobType::class)->create([
             "announcement_id" => $this->fakerAnnouncement->announcement_id,
@@ -138,7 +149,7 @@ class AnnouncementTest extends TestCase
             'job_description' => 'ต้องการ UX/UI',
             'job_position_id' => $this->fakerJobPosition->job_position_id,
             'property' => 'ขยันเป็นพอ',
-            'picture' => 'path/picture',
+            'picture' => '-',
             'start_date' => '2021-01-10 13:00:00',
             'end_date' => '2021-03-31 17:00:00',
             'salary' => '30,000',
@@ -148,7 +159,16 @@ class AnnouncementTest extends TestCase
         ];
 
         $response = $this->putJson('api/academic-industry/announcement', $data);
-        $response->assertStatus(500);
+        $expected = json_decode($response->content(), true);
+
+        $assertion = [
+            "announcement_id" => [
+                "The announcement id field is required."
+            ]
+        ];
+
+        $response->assertStatus(400);
+        $this->assertEquals($assertion, $expected);
     }
 
     public function test_delete_announcement_by_id_success_should_return_true()
