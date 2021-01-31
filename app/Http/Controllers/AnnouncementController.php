@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
+
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller as Controller;
 use App\Repositories\AnnouncementRepositoryInterface;
+use App\Http\RulesValidation\AnnouncementRules;
+
 
 class AnnouncementController extends Controller
 {
+    use AnnouncementRules;
     private $announcement;
 
     public function __construct(AnnouncementRepositoryInterface $announcement_repo)
@@ -19,6 +24,10 @@ class AnnouncementController extends Controller
     public function get(Request $request)
     {
         $id = $request->all();
+        $validated = Validator::make($data, $this->rulesGetAnnouncementById);
+        if ($validated->fails()) {
+            return response()->json($validated->message(), 400);
+        }
         $announcement = $this->announcement->getAnnouncementById($id['announcement_id']);
         return response()->json($announcement, 200);
     }
@@ -33,6 +42,10 @@ class AnnouncementController extends Controller
     public function create(Request $request)
     {
         $data = $request->all();
+        $validated = Validator::make($data, $this->rulesCreationAnnouncement);
+        if ($validated->fails()) {
+            return response()->json($validated->messages(), 400);
+        }
         $announcements = $this->announcement->createAnnouncement($data);
         return response()->json($announcements, 200);
     }
@@ -40,6 +53,10 @@ class AnnouncementController extends Controller
     public function update(Request $request)
     {
         $data = $request->all();
+        $validated = Validator::make($data, $this->rulesUpdateAnnouncementById);
+        if ($validated->fails()) {
+            return response()->json($validated->message(), 400);
+        }
         $announcement_updated = $this->announcement->updateAnnouncement($data);
         return response()->json($announcement_updated, 200);
     }

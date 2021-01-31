@@ -39,7 +39,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $announcement->job_description = $data['job_description'];
         $announcement->job_position_id = $data['job_position_id'];
         $announcement->property = $data['property'];
-        $announcement->picture = $data['picture'];
+        $announcement->picture = $data['picture'] == "" ? "-": $data['logo'];
         $announcement->start_date = $data['start_date'];
         $announcement->end_date = $data['end_date'];
         $announcement->salary = $data['salary'];
