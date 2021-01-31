@@ -24,9 +24,9 @@ class AnnouncementController extends Controller
     public function get(Request $request)
     {
         $id = $request->all();
-        $validated = Validator::make($data, $this->rulesGetAnnouncementById);
+        $validated = Validator::make($id, $this->rulesGetAnnouncementById);
         if ($validated->fails()) {
-            return response()->json($validated->message(), 400);
+            return response()->json($validated->messages(), 400);
         }
         $announcement = $this->announcement->getAnnouncementById($id['announcement_id']);
         return response()->json($announcement, 200);
@@ -54,8 +54,9 @@ class AnnouncementController extends Controller
     {
         $data = $request->all();
         $validated = Validator::make($data, $this->rulesUpdateAnnouncementById);
+        // dd($validated);
         if ($validated->fails()) {
-            return response()->json($validated->message(), 400);
+            return response()->json($validated->messages(), 400);
         }
         $announcement_updated = $this->announcement->updateAnnouncement($data);
         return response()->json($announcement_updated, 200);
