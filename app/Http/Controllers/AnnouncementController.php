@@ -54,7 +54,6 @@ class AnnouncementController extends Controller
     {
         $data = $request->all();
         $validated = Validator::make($data, $this->rulesUpdateAnnouncementById);
-        // dd($validated);
         if ($validated->fails()) {
             return response()->json($validated->messages(), 400);
         }
