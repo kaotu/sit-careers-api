@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Address;
 use Tests\TestCase;
 
 use Faker\Provider\Uuid;
@@ -35,7 +36,14 @@ class AnnouncementTest extends TestCase
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
             'job_type' => 'WiL',
-            'business_day_type' => $this->fakerBusinessDay->business_day_type,
+            'address_one' => '138/2 พรีวิวหอพัก',
+            'address_two' => '-',
+            'lane' => '9',
+            'road' => 'วิภาวดีรังสิต',
+            'sub_district' => 'ดินแดง',
+            'district' => 'ดินแดง',
+            'province' => 'กรุงเทพ',
+            'postal_code' => '10400',
             'start_business_day' => $this->fakerBusinessDay->start_business_day,
             'end_business_day' => $this->fakerBusinessDay->end_business_day,
             'start_business_time' => $this->fakerBusinessDay->start_business_time,
@@ -66,6 +74,14 @@ class AnnouncementTest extends TestCase
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
             'job_type' => 'WiL',
+            'address_one' => '138/2 พรีวิวหอพัก',
+            'address_two' => '-',
+            'lane' => '9',
+            'road' => 'วิภาวดีรังสิต',
+            'sub_district' => 'ดินแดง',
+            'district' => 'ดินแดง',
+            'province' => 'กรุงเทพ',
+            'postal_code' => '10400',
             'business_day_type' => $this->fakerBusinessDay->business_day_type,
             'start_business_day' => $this->fakerBusinessDay->start_business_day,
             'end_business_day' => $this->fakerBusinessDay->end_business_day,
@@ -96,12 +112,14 @@ class AnnouncementTest extends TestCase
             "job_id" => Uuid::uuid()
         ]);
 
+        $address = factory(Address::class)->create([
+            'company_id' => $this->faker->company_id,
+            'address_type' => 'announcement'
+        ]);
+
         $businessDay = factory(BusinessDays::class)->create([
             "company_id" => $this->faker->company_id,
-            'start_business_day' => $this->fakerBusinessDay->start_business_day,
-            'end_business_day' => $this->fakerBusinessDay->end_business_day,
-            'start_business_time' => $this->fakerBusinessDay->start_business_time,
-            'end_business_time' => $this->fakerBusinessDay->end_business_time,
+            'business_day_type' => 'announcement'
         ]);
 
         $data = [
@@ -111,13 +129,21 @@ class AnnouncementTest extends TestCase
             'job_description' => 'ต้องการ UX/UI',
             'job_position_id' => $this->fakerJobPosition->job_position_id,
             'property' => 'ขยันเป็นพอ',
-            'picture' => 'path/picture',
+            'picture' => '',
             'start_date' => '2021-01-10 13:00:00',
             'end_date' => '2021-03-31 17:00:00',
             'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
             'job_type' => 'WiL',
+            'address_one' => '138/2 พรีวิวหอพัก',
+            'address_two' => '-',
+            'lane' => '9',
+            'road' => 'วิภาวดีรังสิต',
+            'sub_district' => 'ดินแดง',
+            'district' => 'ดินแดง',
+            'province' => 'กรุงเทพ',
+            'postal_code' => '10400',
             'start_business_day' => $this->fakerBusinessDay->start_business_day,
             'end_business_day' => $this->fakerBusinessDay->end_business_day,
             'start_business_time' => '07:00',
@@ -142,20 +168,38 @@ class AnnouncementTest extends TestCase
             "job_id" => Uuid::uuid()
         ]);
 
-        //Filed announcement_id (pk) missing
+        $address = factory(Address::class)->create([
+            'company_id' => $this->faker->company_id
+        ]);
+
+        $businessDay = factory(BusinessDays::class)->create([
+            "company_id" => $this->faker->company_id,
+        ]);
+
+        //Filed announcement_id (pk), property and postal_code are missing
         $data = [
             'company_id' => $this->faker->company_id,
             'announcement_title' => 'รับสมัครงานตำแหน่ง UX/UI',
             'job_description' => 'ต้องการ UX/UI',
             'job_position_id' => $this->fakerJobPosition->job_position_id,
-            'property' => 'ขยันเป็นพอ',
-            'picture' => '-',
+            'picture' => '',
             'start_date' => '2021-01-10 13:00:00',
             'end_date' => '2021-03-31 17:00:00',
             'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
-            'job_type' => 'WiL'
+            'job_type' => 'WiL',
+            'address_one' => '138/2 พรีวิวหอพัก',
+            'address_two' => '-',
+            'lane' => '9',
+            'road' => 'วิภาวดีรังสิต',
+            'sub_district' => 'ดินแดง',
+            'district' => 'ดินแดง',
+            'province' => 'กรุงเทพ',
+            'start_business_day' => $this->fakerBusinessDay->start_business_day,
+            'end_business_day' => $this->fakerBusinessDay->end_business_day,
+            'start_business_time' => '07:00',
+            'end_business_time' => '19:00',
         ];
 
         $response = $this->putJson('api/academic-industry/announcement', $data);
@@ -164,6 +208,12 @@ class AnnouncementTest extends TestCase
         $assertion = [
             "announcement_id" => [
                 "The announcement id field is required."
+            ],
+            "property" => [
+                "The property field is required."
+            ],
+            "postal_code" => [
+                "The postal code field is required."
             ]
         ];
 
@@ -180,8 +230,18 @@ class AnnouncementTest extends TestCase
             "job_id" => Uuid::uuid()
         ]);
 
+        $address = factory(Address::class)->create([
+            'company_id' => $data['company_id'],
+            'address_type' => 'announcement'
+        ]);
+
+        $businessDay = factory(BusinessDays::class)->create([
+            'company_id' => $data['company_id'],
+            'business_day_type' => 'announcement'
+        ]);
+
         $get_announcement_id = [
-            'announcement_id' => $data['announcement_id'],
+            'announcement_id' => $data['announcement_id']
         ];
 
         $expected_announcement = true;
@@ -205,7 +265,19 @@ class AnnouncementTest extends TestCase
             'salary' => '30,000',
             'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
             'status' => 'เปิดรับสมัคร',
-            'job_type' => 'WiL'
+            'job_type' => 'WiL',
+            'address_one' => '138/2 พรีวิวหอพัก',
+            'address_two' => '-',
+            'lane' => '9',
+            'road' => 'วิภาวดีรังสิต',
+            'sub_district' => 'ดินแดง',
+            'district' => 'ดินแดง',
+            'province' => 'กรุงเทพ',
+            'postal_code' => '10400',
+            'start_business_day' => $this->fakerBusinessDay->start_business_day,
+            'end_business_day' => $this->fakerBusinessDay->end_business_day,
+            'start_business_time' => $this->fakerBusinessDay->start_business_time,
+            'end_business_time' => $this->fakerBusinessDay->end_business_time,
         ];
 
         $id = [
@@ -214,7 +286,7 @@ class AnnouncementTest extends TestCase
 
         $response_post_method = $this->postJson('api/academic-industry/announcement', $id);
 
-        $expected_announcement = 'Find not found announcement or job type.';
+        $expected_announcement = 'Find not found announcement or job type or address or business day.';
 
         $response = $this->deleteJson('api/academic-industry/announcement', $id);
         $response_arr = json_decode($response->content(), true);
