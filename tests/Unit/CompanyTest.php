@@ -15,7 +15,7 @@ use App\Models\Company;
 
 use App\Models\Address;
 use App\Models\MOU;
-use App\Models\BusinessDays;
+use App\Models\BusinessDay;
 
 class CompanyTest extends TestCase
 {
@@ -80,7 +80,7 @@ class CompanyTest extends TestCase
             "mou_id" => Uuid::uuid()
         ]);
 
-        $businessDay = factory(BusinessDays::class)->create([
+        $businessDay = factory(BusinessDay::class)->create([
             "company_id" => $this->faker->company_id,
             "business_day_id" => Uuid::uuid()
         ]);

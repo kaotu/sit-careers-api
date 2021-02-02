@@ -9,7 +9,7 @@ use Faker\Provider\Uuid;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Models\Announcement;
-use App\Models\BusinessDays;
+use App\Models\BusinessDay;
 use App\Models\JobType;
 
 class AnnouncementTest extends TestCase
@@ -117,7 +117,7 @@ class AnnouncementTest extends TestCase
             'address_type' => 'announcement'
         ]);
 
-        $businessDay = factory(BusinessDays::class)->create([
+        $businessDay = factory(BusinessDay::class)->create([
             "company_id" => $this->faker->company_id,
             'business_day_type' => 'announcement'
         ]);
@@ -172,7 +172,7 @@ class AnnouncementTest extends TestCase
             'company_id' => $this->faker->company_id
         ]);
 
-        $businessDay = factory(BusinessDays::class)->create([
+        $businessDay = factory(BusinessDay::class)->create([
             "company_id" => $this->faker->company_id,
         ]);
 
@@ -235,7 +235,7 @@ class AnnouncementTest extends TestCase
             'address_type' => 'announcement'
         ]);
 
-        $businessDay = factory(BusinessDays::class)->create([
+        $businessDay = factory(BusinessDay::class)->create([
             'company_id' => $data['company_id'],
             'business_day_type' => 'announcement'
         ]);

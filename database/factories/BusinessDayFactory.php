@@ -5,10 +5,10 @@
 use Faker\Generator as Faker;
 use Faker\Provider\Uuid;
 
-use App\Models\BusinessDays;
+use App\Models\BusinessDay;
 use App\Models\Company;
 
-$factory->define(BusinessDays::class, function (Faker $faker) use ($factory){
+$factory->define(BusinessDay::class, function (Faker $faker) use ($factory){
     return [
         'business_day_id' => Uuid::uuid(),
         'business_day_type' => 'announcement',
