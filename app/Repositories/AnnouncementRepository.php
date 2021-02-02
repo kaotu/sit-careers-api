@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Address;
 use App\Models\Announcement;
-use App\Models\BusinessDays;
 use App\Models\JobType;
 use Carbon\Carbon;
 
@@ -16,8 +15,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     {
         $announcement = Announcement::join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
                         ->join('job_types', 'job_types.announcement_id', '=', 'announcements.announcement_id')
-                        ->join('addresses', 'addresses.company_id', '=', 'announcements.company_id')
-                        ->join('business_days', 'business_days.company_id', '=', 'announcements.company_id')
+                        ->join('addresses', 'addresses.address_type_id', '=', 'announcements.company_id')
                         ->where('announcements.announcement_id', $id)
                         ->first();
         return $announcement;
@@ -25,9 +23,10 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
 
     public function getAllAnnouncements()
     {
-        $announcements = Announcement::join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
+        $announcements = Announcement::join('addresses', 'addresses.address_type_id', '=', 'announcements.announcement_id')
                         ->join('job_types', 'job_types.announcement_id', '=', 'announcements.announcement_id')
-                        ->join('business_days', 'business_days.company_id', '=', 'announcements.company_id')
+                        ->join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
+                        ->where('addresses.address_type', 'announcement')
                         ->get();
         return $announcements;
     }
@@ -46,6 +45,10 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $announcement->salary = $data['salary'];
         $announcement->welfare = $data['welfare'];
         $announcement->status = $data['status'];
+        $announcement->start_business_day = $data['start_business_day'];
+        $announcement->end_business_day = $data['end_business_day'];
+        $announcement->start_business_time = $data['start_business_time'];
+        $announcement->end_business_time = $data['end_business_time'];
         $announcement->save();
 
         $jobType = new JobType();
@@ -63,19 +66,10 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $address->province = $data['province'];
         $address->postal_code = $data['postal_code'];
         $address->address_type = 'announcement';
-        $address->company_id = $announcement->company_id;
+        $address->address_type_id =  $announcement->announcement_id;
         $address->save();
 
-        $businessDay = new BusinessDays();
-        $businessDay->company_id = $announcement->company_id;
-        $businessDay->business_day_type = 'announcement';
-        $businessDay->start_business_day = $data['start_business_day'];
-        $businessDay->end_business_day = $data['end_business_day'];
-        $businessDay->start_business_time = $data['start_business_time'];
-        $businessDay->end_business_time = $data['end_business_time'];
-        $businessDay->save();
-
-        return array_merge($announcement->toArray(), $jobType->toArray(), $address->toArray(), $businessDay->toArray());
+        return array_merge($announcement->toArray(), $jobType->toArray(), $address->toArray());
     }
 
     public function updateAnnouncement($data)
@@ -92,6 +86,10 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $announcement->salary = $data['salary'];
         $announcement->welfare = $data['welfare'];
         $announcement->status = $data['status'];
+        $announcement->start_business_day = $data['start_business_day'];
+        $announcement->end_business_day = $data['end_business_day'];
+        $announcement->start_business_time = $data['start_business_time'];
+        $announcement->end_business_time = $data['end_business_time'];
         $announcement->updated_at = Carbon::now();
         $announcement->save();
 
@@ -100,7 +98,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $jobType->save();
 
         $address = Address::where('address_type', 'announcement')
-                ->where('company_id', $data['company_id'])->first();
+                ->where('address_type_id', $data['announcement_id'])->first();
         $address->address_one = $data['address_one'];
         $address->address_two = $data['address_two'] == "" ? "-": $data['address_two'];
         $address->lane = $data['lane'] == "" ? "-": $data['lane'];
@@ -111,34 +109,22 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $address->postal_code = $data['postal_code'];
         $address->save();
 
-        $businessDay = BusinessDays::where('business_day_type', 'announcement')
-                    ->where('company_id', $data['company_id'])->first();
-        $businessDay->start_business_day = $data['start_business_day'];
-        $businessDay->end_business_day = $data['end_business_day'];
-        $businessDay->start_business_time = $data['start_business_time'];
-        $businessDay->end_business_time = $data['end_business_time'];
-        $businessDay->save();
-
-        return array_merge($announcement->toArray(), $jobType->toArray(), $address->toArray(), $businessDay->toArray());
+        return array_merge($announcement->toArray(), $jobType->toArray(), $address->toArray());
     }
 
     public function deleteAnnouncementById($id)
     {
         $announcement = Announcement::find($id)->first();
-        $company_id = $announcement['company_id'];
 
         $jobType = JobType::where('announcement_id', $id)->first();
         $address = Address::where('address_type', 'announcement')
-                    ->where('company_id', $company_id)->first();
-        $businessDay = BusinessDays::where('business_day_type', 'announcement')
-                    ->where('company_id', $company_id)->first();
+                    ->where('address_type_id', $id)->first();
 
-        if($announcement && $jobType && $address && $businessDay){
+        if($announcement && $jobType && $address){
             $deleted_announcement = $announcement->delete();
             $deleted_jobType = $jobType->delete();
             $deleted_address = $address->delete();
-            $deleted_business_day = $businessDay->delete();
-            return $deleted_announcement && $deleted_jobType && $deleted_address && $deleted_business_day;
+            return $deleted_announcement && $deleted_jobType && $deleted_address;
         }
 
         return "Find not found announcement or job type or address or business day.";
