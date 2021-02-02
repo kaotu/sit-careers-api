@@ -257,8 +257,8 @@ class AnnouncementTest extends TestCase
             'province' => 'กรุงเทพ',
             'postal_code' => '10400',
             'start_business_day' => 'จันทร์',
-            'start_business_time' => 'จันทร์',
-            'end_business_day' => '09:00',
+            'end_business_day' => 'ศุกร์',
+            'start_business_time' => '09:00',
             'end_business_time' => '18:00',
         ];
 
