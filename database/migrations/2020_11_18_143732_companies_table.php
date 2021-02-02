@@ -26,6 +26,10 @@ class CompaniesTable extends Migration
             $table->string('tel_no', 10);
             $table->string('phone_no', 10);
             $table->string('website');
+            $table->string('start_business_day', 20);
+            $table->string('end_business_day', 20);
+            $table->string('start_business_time', 6);
+            $table->string('end_business_time', 6);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -9,17 +9,15 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Company;
 use App\Models\Address;
-use App\Models\BusinessDay;
 use App\Models\MOU;
 
 class CompanyRepository implements CompanyRepositoryInterface
 {
     public function getCompanyById($id)
     {
-        $company = DB::table('companies')
-        ->join('mou', 'mou.company_id', '=', 'companies.company_id')
-        ->join('addresses', 'addresses.company_id', '=', 'companies.company_id')
-        ->join('business_days', 'business_days.company_id', '=', 'companies.company_id')
+
+        $company = Company::join('mou', 'mou.company_id', '=', 'companies.company_id')
+        ->join('addresses', 'addresses.address_type_id', '=', 'companies.company_id')
         ->where('companies.company_id', $id)
         ->first();
         return $company;
@@ -27,10 +25,9 @@ class CompanyRepository implements CompanyRepositoryInterface
 
     public function getAllCompanies()
     {
-        $companies = DB::table('companies')
-            ->join('mou', 'mou.company_id', '=', 'companies.company_id')
-            ->join('addresses', 'addresses.company_id', '=', 'companies.company_id')
-            ->join('business_days', 'business_days.company_id', '=', 'companies.company_id')
+        $companies = Company::join('mou', 'mou.company_id', '=', 'companies.company_id')
+            ->join('addresses', 'addresses.address_type_id', '=', 'companies.company_id')
+            ->where('addresses.address_type', '=', 'company')
             ->get();
         return $companies;
     }
@@ -49,6 +46,10 @@ class CompanyRepository implements CompanyRepositoryInterface
         $company->tel_no = $data['tel_no'] == "" ? "-": $data['tel_no'];
         $company->phone_no = $data['phone_no'] == "" ? "-": $data['phone_no'];
         $company->website = $data['website'] == "" ? "-": $data['website'];
+        $company->start_business_day = $data['start_business_day'];
+        $company->end_business_day = $data['end_business_day'];
+        $company->start_business_time = $data['start_business_time'];
+        $company->end_business_time = $data['end_business_time'];
         $company->save();
 
         $address = new Address();
@@ -61,7 +62,7 @@ class CompanyRepository implements CompanyRepositoryInterface
         $address->province = $data['province'];
         $address->postal_code = $data['postal_code'];
         $address->address_type = 'company';
-        $address->company_id = $company->company_id;
+        $address->address_type_id = $company->company_id;
         $address->save();
 
         $mou = new MOU();
@@ -71,16 +72,7 @@ class CompanyRepository implements CompanyRepositoryInterface
         $mou->contact_period = $data['contact_period'] == "" ? "-": $data['contact_period'];
         $mou->save();
 
-        $businessDay = new BusinessDay();
-        $businessDay->company_id = $company->company_id;
-        $businessDay->business_day_type = 'company';
-        $businessDay->start_business_day = $data['start_business_day'];
-        $businessDay->end_business_day = $data['end_business_day'];
-        $businessDay->start_business_time = $data['start_business_time'];
-        $businessDay->end_business_time = $data['end_business_time'];
-        $businessDay->save();
-
-        return array_merge($company->toArray(),  $address->toArray(), $mou->toArray(), $businessDay->toArray());
+        return array_merge($company->toArray(),  $address->toArray(), $mou->toArray());
     }
 
     public function updateCompanyById($data)
@@ -99,9 +91,13 @@ class CompanyRepository implements CompanyRepositoryInterface
         $company->tel_no = $data['tel_no'] == "" ? "-": $data['tel_no'];
         $company->phone_no = $data['phone_no'] == "" ? "-": $data['phone_no'];
         $company->website = $data['website'] == "" ? "-": $data['website'];
+        $company->start_business_day = $data['start_business_day'];
+        $company->end_business_day = $data['end_business_day'];
+        $company->start_business_time = $data['start_business_time'];
+        $company->end_business_time = $data['end_business_time'];
         $company->save();
 
-        $address = Address::where('company_id', $id)->first();
+        $address = Address::where('address_type_id', $id)->first();
         $address->address_one = $data['address_one'];
         $address->address_two = $data['address_two'] == "" ? "-": $data['address_two'];
         $address->lane = $data['lane'] == "" ? "-": $data['lane'];
@@ -110,7 +106,8 @@ class CompanyRepository implements CompanyRepositoryInterface
         $address->district = $data['district'];
         $address->province = $data['province'];
         $address->postal_code = $data['postal_code'];
-        $address->company_id = $company->company_id;
+        $address->address_type = 'company';
+        $address->address_type_id = $company->company_id;
         $address->save();
 
         $mou = MOU::where('company_id', $id)->first();
@@ -120,20 +117,13 @@ class CompanyRepository implements CompanyRepositoryInterface
         $mou->contact_period = $data['contact_period'] == "" ? "-": $data['contact_period'];
         $mou->save();
 
-        $businessDay = BusinessDay::where('company_id', $id)->first();
-        $businessDay->start_business_day = $data['start_business_day'];
-        $businessDay->end_business_day = $data['end_business_day'];
-        $businessDay->start_business_time = $data['start_business_time'];
-        $businessDay->end_business_time = $data['end_business_time'];
-        $businessDay->save();
-
-        return array_merge($company->toArray(),  $address->toArray(), $mou->toArray(), $businessDay->toArray());
+        return array_merge($company->toArray(),  $address->toArray(), $mou->toArray());
     }
 
     public function deleteCompanyById($id)
     {
         $company = Company::find($id);
-        $address = Address::where('company_id', $id)->first();
+        $address = Address::where('address_type_id', $id)->first();
         $mou = MOU::where('company_id', $id)->first();
 
         if($company && $address && $mou) {

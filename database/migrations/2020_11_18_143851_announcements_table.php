@@ -26,6 +26,10 @@ class AnnouncementsTable extends Migration
             $table->string('salary');
             $table->string('welfare');
             $table->string('status');
+            $table->string('start_business_day', 20);
+            $table->string('end_business_day', 20);
+            $table->string('start_business_time', 6);
+            $table->string('end_business_time', 6);
             $table->timestamps();
             $table->softDeletes();
         });
