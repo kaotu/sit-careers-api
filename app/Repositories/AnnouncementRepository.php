@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Address;
 use App\Models\Announcement;
-use App\Models\BusinessDays;
+use App\Models\BusinessDay;
 use App\Models\JobType;
 use Carbon\Carbon;
 
@@ -27,6 +27,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
     {
         $announcements = Announcement::join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
                         ->join('job_types', 'job_types.announcement_id', '=', 'announcements.announcement_id')
+                        ->join('addresses', 'addresses.company_id', '=', 'announcements.company_id')
                         ->join('business_days', 'business_days.company_id', '=', 'announcements.company_id')
                         ->get();
         return $announcements;
@@ -66,7 +67,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $address->company_id = $announcement->company_id;
         $address->save();
 
-        $businessDay = new BusinessDays();
+        $businessDay = new BusinessDay();
         $businessDay->company_id = $announcement->company_id;
         $businessDay->business_day_type = 'announcement';
         $businessDay->start_business_day = $data['start_business_day'];
@@ -111,7 +112,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $address->postal_code = $data['postal_code'];
         $address->save();
 
-        $businessDay = BusinessDays::where('business_day_type', 'announcement')
+        $businessDay = BusinessDay::where('business_day_type', 'announcement')
                     ->where('company_id', $data['company_id'])->first();
         $businessDay->start_business_day = $data['start_business_day'];
         $businessDay->end_business_day = $data['end_business_day'];
@@ -130,7 +131,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $jobType = JobType::where('announcement_id', $id)->first();
         $address = Address::where('address_type', 'announcement')
                     ->where('company_id', $company_id)->first();
-        $businessDay = BusinessDays::where('business_day_type', 'announcement')
+        $businessDay = BusinessDay::where('business_day_type', 'announcement')
                     ->where('company_id', $company_id)->first();
 
         if($announcement && $jobType && $address && $businessDay){

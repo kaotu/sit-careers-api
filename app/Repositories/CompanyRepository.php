@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Company;
 use App\Models\Address;
-use App\Models\BusinessDays;
+use App\Models\BusinessDay;
 use App\Models\MOU;
 
 class CompanyRepository implements CompanyRepositoryInterface
@@ -71,7 +71,7 @@ class CompanyRepository implements CompanyRepositoryInterface
         $mou->contact_period = $data['contact_period'] == "" ? "-": $data['contact_period'];
         $mou->save();
 
-        $businessDay = new BusinessDays();
+        $businessDay = new BusinessDay();
         $businessDay->company_id = $company->company_id;
         $businessDay->business_day_type = 'company';
         $businessDay->start_business_day = $data['start_business_day'];
@@ -120,7 +120,7 @@ class CompanyRepository implements CompanyRepositoryInterface
         $mou->contact_period = $data['contact_period'] == "" ? "-": $data['contact_period'];
         $mou->save();
 
-        $businessDay = BusinessDays::where('company_id', $id)->first();
+        $businessDay = BusinessDay::where('company_id', $id)->first();
         $businessDay->start_business_day = $data['start_business_day'];
         $businessDay->end_business_day = $data['end_business_day'];
         $businessDay->start_business_time = $data['start_business_time'];

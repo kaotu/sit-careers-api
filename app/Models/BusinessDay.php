@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Traits\BusinessDaysUuid;
+use App\Traits\BusinessDayUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class BusinessDays extends Model
+class BusinessDay extends Model
 {
-    Use BusinessDaysUuid;
+    Use BusinessDayUuid;
     use SoftDeletes;
 
     protected $table = 'business_days';

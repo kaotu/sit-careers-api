@@ -5,7 +5,7 @@ namespace App\Traits;
 
 use Illuminate\Support\Str;
 
-trait BusinessDaysUuid
+trait BusinessDayUuid
 {
     protected static function boot()
     {
