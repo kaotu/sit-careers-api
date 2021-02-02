@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  variables:
+    REPOSITORY_URI: "192479299400.dkr.ecr.ap-southeast-1.amazonaws.com/sit-careers-api"
+
 phases:
   install:
     runtime-versions:
@@ -11,17 +15,21 @@ phases:
       - echo Run Test started on `date`
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
-      - cp $CODEBUILD_SRC_DIR_TESTING/.env.testing $CODEBUILD_SRC_DIR/.env.testing
-      - docker-compose -f docker-compose.test.yml up -d db
+      - cp $CODEBUILD_SRC_DIR_TESTING/dev/testing.env $CODEBUILD_SRC_DIR/testing.env
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t sit-careers-api:api-test-$IMAGE_TAG -f ./docker/api/Dockerfile.dev .
+      - docker build -t $REPOSITORY_URI:api-test-$IMAGE_TAG -f ./docker/api/Dockerfile.dev .
+      - echo Run Migrate Database...
+      - export IMAGE_TAG=${IMAGE_TAG}; docker-compose -f docker-compose.test.yml run --rm api php artisan migrate:fresh --seed
+      - echo Run Unit Tests...
+      - export IMAGE_TAG=${IMAGE_TAG}; docker-compose -f docker-compose.test.yml run --rm api php artisan test
   post_build:
     commands:
-      - echo Run Unit Tests...
-      - export IMAGE_TAG=${IMAGE_TAG}; docker-compose -f docker-compose.test.yml run --rm api php artisan test --env=testing
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI:api-test-$IMAGE_TAG
 
 cache:
   paths:
