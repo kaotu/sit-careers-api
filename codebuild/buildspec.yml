@@ -20,6 +20,8 @@ phases:
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:api-dev-$IMAGE_TAG -f ./docker/api/Dockerfile.dev .
       - docker build -t $REPOSITORY_URI:nginx-dev-$IMAGE_TAG -f ./docker/nginx/Dockerfile .
+      - docker tag $REPOSITORY_URI:api-dev-$IMAGE_TAG $REPOSITORY_URI:api-dev-latest
+      - docker tag $REPOSITORY_URI:nginx-dev-$IMAGE_TAG $REPOSITORY_URI:nginx-dev-latest
   post_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -28,6 +30,8 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:api-dev-$IMAGE_TAG
       - docker push $REPOSITORY_URI:nginx-dev-$IMAGE_TAG
+      - docker push $REPOSITORY_URI:api-dev-latest
+      - docker push $REPOSITORY_URI:nginx-dev-latest
       - echo Writing image definitions file...
       - printf '[{"name":"sit-careers-api","imageUri":"%s"},' $REPOSITORY_URI:api-dev-$IMAGE_TAG > imagedefinitions.json
       - printf '{"name":"sit-careers-api-nginx","imageUri":"%s"}]' $REPOSITORY_URI:nginx-dev-$IMAGE_TAG >> imagedefinitions.json
