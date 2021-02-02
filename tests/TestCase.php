@@ -7,7 +7,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 use App\Models\Announcement;
-use App\Models\BusinessDays;
 use App\Models\Company;
 use App\Models\JobPosition;
 
@@ -25,6 +24,5 @@ abstract class TestCase extends BaseTestCase
         $this->faker = factory(Company::class)->create();
         $this->fakerJobPosition = factory(JobPosition::class)->create();
         $this->fakerAnnouncement = factory(Announcement::class)->create();
-        $this->fakerBusinessDay = factory(BusinessDays::class)->create();
     }
 }
