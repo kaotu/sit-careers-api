@@ -25,8 +25,8 @@ $factory->define(Announcement::class, function (Faker $faker) use ($factory) {
         'welfare' => 'มีเงินเดือนให้',
         'status' => 'เปิดรับสมัคร',
         'start_business_day' => 'จันทร์',
-        'start_business_time' => 'จันทร์',
-        'end_business_day' => '09:00',
+        'end_business_day' => 'ศุกร์',
+        'start_business_time' => '09:00',
         'end_business_time' => '18:00',
     ];
 });
