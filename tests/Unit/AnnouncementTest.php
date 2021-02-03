@@ -111,12 +111,13 @@ class AnnouncementTest extends TestCase
         ]);
 
         $address = factory(Address::class)->create([
-            'address_type_id' => $this->fakerAnnouncement->announcement_id,
+            'company_id' => $this->faker->company_id,
             'address_type' => 'announcement'
         ]);
 
         $data = [
             'announcement_id' => $this->fakerAnnouncement->announcement_id,
+            'address_id' => $address->address_id,
             'announcement_title' => 'รับสมัครงานตำแหน่ง UX/UI',
             'job_description' => 'ต้องการ UX/UI',
             'job_position_id' => $this->fakerJobPosition->job_position_id,
@@ -141,7 +142,6 @@ class AnnouncementTest extends TestCase
             'start_business_time' => '09:00',
             'end_business_time' => '18:00',
         ];
-
         $response = $this->putJson('api/academic-industry/announcement', $data);
         $response->assertStatus(200);
 
@@ -161,7 +161,7 @@ class AnnouncementTest extends TestCase
         ]);
 
         $address = factory(Address::class)->create([
-            'address_type_id' => $this->fakerAnnouncement->announcement_id
+            "company_id" => $this->faker->company_id,
         ]);
 
         //Filed announcement_id (pk), property and postal_code are missing
@@ -218,7 +218,7 @@ class AnnouncementTest extends TestCase
         ]);
 
         $address = factory(Address::class)->create([
-            'address_type_id' => $data['announcement_id'],
+            'company_id' => $this->faker->company_id,
             'address_type' => 'announcement'
         ]);
 
