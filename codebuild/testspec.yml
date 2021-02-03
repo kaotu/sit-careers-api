@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    REPOSITORY_URI: "192479299400.dkr.ecr.ap-southeast-1.amazonaws.com/sit-careers-api"
+    REPOSITORY_URI: "sit-careers-api"
 
 phases:
   install:
@@ -21,15 +21,13 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:api-test-$IMAGE_TAG -f ./docker/api/Dockerfile.dev .
+  post_build:
+    commands:
+      - echo Build completed on `date`
       - echo Run Migrate Database...
       - export IMAGE_TAG=${IMAGE_TAG}; docker-compose -f docker-compose.test.yml run --rm api php artisan migrate:fresh --seed
       - echo Run Unit Tests...
       - export IMAGE_TAG=${IMAGE_TAG}; docker-compose -f docker-compose.test.yml run --rm api php artisan test
-  post_build:
-    commands:
-      - echo Build completed on `date`
-      - echo Pushing the Docker images...
-      - docker push $REPOSITORY_URI:api-test-$IMAGE_TAG
 
 cache:
   paths:
