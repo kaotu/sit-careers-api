@@ -24,9 +24,13 @@ class AddressesTable extends Migration
             $table->string('province');
             $table->string('postal_code', 5);
             $table->string('address_type', 20);
-            $table->uuid('address_type_id')->nullable(false);
+            $table->uuid('company_id')->nullable(false);
             $table->timestamps();
             $table->softDeletes();
+
+        });
+        Schema::table('addresses', function (Blueprint $table) {
+            $table->foreign('company_id')->references('company_id')->on('companies');
         });
     }
 

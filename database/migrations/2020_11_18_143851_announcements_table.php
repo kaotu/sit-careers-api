@@ -16,6 +16,7 @@ class AnnouncementsTable extends Migration
         Schema::create('announcements', function (Blueprint $table) {
             $table->uuid('announcement_id')->primary();
             $table->uuid('company_id')->nullable(false);
+            $table->uuid('address_id')->nullable(false);
             $table->string('announcement_title');
             $table->string('job_description');
             $table->uuid('job_position_id')->nullable(false);
@@ -36,6 +37,7 @@ class AnnouncementsTable extends Migration
 
         Schema::table('announcements', function (Blueprint $table) {
             $table->foreign('company_id')->references('company_id')->on('companies');
+            $table->foreign('address_id')->references('address_id')->on('addresses');
             $table->foreign('job_position_id')->references('job_position_id')->on('job_positions');
         });
     }
