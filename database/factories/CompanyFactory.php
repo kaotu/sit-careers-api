@@ -22,7 +22,10 @@ $factory->define(Company::class, function (Faker $faker) {
         'e_mail_manager' => 'company@gmail.com',
         'tel_no' => '0988882356',
         'phone_no' => '0298987645',
-        'website' => 'http://test.com'
+        'website' => 'http://test.com',
+        'start_business_day' => 'จันทร์',
+        'end_business_day' => 'ศุกร์',
+        'start_business_time' => '09:00',
+        'end_business_time' => '18:00',
     ];
 });
-

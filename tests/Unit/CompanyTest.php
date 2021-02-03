@@ -15,7 +15,6 @@ use App\Models\Company;
 
 use App\Models\Address;
 use App\Models\MOU;
-use App\Models\BusinessDay;
 
 class CompanyTest extends TestCase
 {
@@ -72,17 +71,13 @@ class CompanyTest extends TestCase
     public function test_update_company_success_should_return_company_that_had_been_updated()
     {
         $address = factory(Address::class)->create([
-            "company_id" => $this->faker->company_id,
+            "address_type_id" => $this->faker->company_id,
             "address_id" => Uuid::uuid()
         ]);
+
         $mou = factory(MOU::class)->create([
             "company_id" => $this->faker->company_id,
             "mou_id" => Uuid::uuid()
-        ]);
-
-        $businessDay = factory(BusinessDay::class)->create([
-            "company_id" => $this->faker->company_id,
-            "business_day_id" => Uuid::uuid()
         ]);
 
         $data = [
@@ -193,7 +188,7 @@ class CompanyTest extends TestCase
     public function test_update_company_fail_should_return_status_500()
     {
         $address = factory(Address::class)->create([
-            "company_id" => $this->faker->company_id,
+            "address_type_id" => $this->faker->company_id,
             "address_id" => Uuid::uuid()
         ]);
         $mou = factory(MOU::class)->create([
@@ -214,7 +209,7 @@ class CompanyTest extends TestCase
         $data = $this->faker;
 
         $address = factory(Address::class)->create([
-            "company_id" => $this->faker->company_id,
+            "address_type_id" => $this->faker->company_id,
             "address_id" => Uuid::uuid()
         ]);
 

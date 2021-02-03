@@ -23,6 +23,10 @@ $factory->define(Announcement::class, function (Faker $faker) use ($factory) {
         'end_date' => '2021-02-10 18:00:00',
         'salary' => '28,000',
         'welfare' => 'มีเงินเดือนให้',
-        'status' => 'เปิดรับสมัคร'
+        'status' => 'เปิดรับสมัคร',
+        'start_business_day' => 'จันทร์',
+        'end_business_day' => 'ศุกร์',
+        'start_business_time' => '09:00',
+        'end_business_time' => '18:00',
     ];
 });
