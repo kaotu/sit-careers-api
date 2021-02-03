@@ -15,7 +15,6 @@ services:
   db:
     image: mariadb:latest
     restart: always
-    container_name: sit-careers-db
     ports:
         - "3306:3306"
     environment:
