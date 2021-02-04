@@ -17,7 +17,7 @@ class CompanyRepository implements CompanyRepositoryInterface
     {
 
         $company = Company::join('mou', 'mou.company_id', '=', 'companies.company_id')
-        ->join('addresses', 'addresses.address_type_id', '=', 'companies.company_id')
+        ->join('addresses', 'addresses.company_id', '=', 'companies.company_id')
         ->where('companies.company_id', $id)
         ->first();
         return $company;
@@ -26,7 +26,7 @@ class CompanyRepository implements CompanyRepositoryInterface
     public function getAllCompanies()
     {
         $companies = Company::join('mou', 'mou.company_id', '=', 'companies.company_id')
-            ->join('addresses', 'addresses.address_type_id', '=', 'companies.company_id')
+            ->join('addresses', 'addresses.company_id', '=', 'companies.company_id')
             ->where('addresses.address_type', '=', 'company')
             ->get();
         return $companies;
@@ -62,7 +62,7 @@ class CompanyRepository implements CompanyRepositoryInterface
         $address->province = $data['province'];
         $address->postal_code = $data['postal_code'];
         $address->address_type = 'company';
-        $address->address_type_id = $company->company_id;
+        $address->company_id = $company->company_id;
         $address->save();
 
         $mou = new MOU();
@@ -97,7 +97,7 @@ class CompanyRepository implements CompanyRepositoryInterface
         $company->end_business_time = $data['end_business_time'];
         $company->save();
 
-        $address = Address::where('address_type_id', $id)->first();
+        $address = Address::where('company_id', $id)->first();
         $address->address_one = $data['address_one'];
         $address->address_two = $data['address_two'] == "" ? "-": $data['address_two'];
         $address->lane = $data['lane'] == "" ? "-": $data['lane'];
@@ -107,7 +107,7 @@ class CompanyRepository implements CompanyRepositoryInterface
         $address->province = $data['province'];
         $address->postal_code = $data['postal_code'];
         $address->address_type = 'company';
-        $address->address_type_id = $company->company_id;
+        $address->company_id = $company->company_id;
         $address->save();
 
         $mou = MOU::where('company_id', $id)->first();
@@ -123,7 +123,7 @@ class CompanyRepository implements CompanyRepositoryInterface
     public function deleteCompanyById($id)
     {
         $company = Company::find($id);
-        $address = Address::where('address_type_id', $id)->first();
+        $address = Address::where('company_id', $id)->first();
         $mou = MOU::where('company_id', $id)->first();
 
         if($company && $address && $mou) {

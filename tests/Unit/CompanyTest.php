@@ -71,7 +71,7 @@ class CompanyTest extends TestCase
     public function test_update_company_success_should_return_company_that_had_been_updated()
     {
         $address = factory(Address::class)->create([
-            "address_type_id" => $this->faker->company_id,
+            "company_id" => $this->faker->company_id,
             "address_id" => Uuid::uuid()
         ]);
 
@@ -188,9 +188,10 @@ class CompanyTest extends TestCase
     public function test_update_company_fail_should_return_status_500()
     {
         $address = factory(Address::class)->create([
-            "address_type_id" => $this->faker->company_id,
+            "company_id" => $this->faker->company_id,
             "address_id" => Uuid::uuid()
         ]);
+
         $mou = factory(MOU::class)->create([
             "company_id" => $this->faker->company_id,
             "mou_id" => Uuid::uuid()
@@ -209,7 +210,7 @@ class CompanyTest extends TestCase
         $data = $this->faker;
 
         $address = factory(Address::class)->create([
-            "address_type_id" => $this->faker->company_id,
+            "company_id" => $this->faker->company_id,
             "address_id" => Uuid::uuid()
         ]);
 
