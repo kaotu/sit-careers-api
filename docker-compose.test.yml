@@ -4,7 +4,6 @@ services:
   api:
     image: sit-careers-api:api-test-${IMAGE_TAG}
     working_dir: /app
-    container_name: sit-careers-api
     restart: always
     env_file:
       - .env.testing
@@ -16,7 +15,6 @@ services:
   db:
     image: mariadb:latest
     restart: always
-    container_name: sit-careers-db
     ports:
         - "3306:3306"
     environment:
