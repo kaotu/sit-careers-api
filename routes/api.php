@@ -24,6 +24,7 @@ Route::put('company', 'CompanyController@update');
 Route::delete('company', 'CompanyController@destroy');
 
 Route::prefix('academic-industry')->group(function () {
+    Route::get('job-positions', 'JobPositionController@get');
     Route::get('announcement', 'AnnouncementController@get');
     Route::get('announcements', 'AnnouncementController@getAnnouncements');
     Route::post('announcement', 'AnnouncementController@create');
