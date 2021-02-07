@@ -16,6 +16,7 @@ class ApplicationsTable extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->uuid('application_id')->primary();
             $table->uuid('announcement_id')->nullable(false);
+            $table->uuid('student_id')->nullable(false);
             $table->date('application_date');
             $table->string('status');
             $table->string('name_title');
@@ -28,6 +29,7 @@ class ApplicationsTable extends Migration
 
         Schema::table('applications', function (Blueprint $table) {
             $table->foreign('announcement_id')->references('announcement_id')->on('announcements');
+            $table->foreign('student_id')->references('user_id')->on('users');
         });
     }
 
