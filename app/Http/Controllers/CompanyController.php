@@ -51,7 +51,7 @@ class CompanyController extends Controller
         }
         $s3 = Storage::disk('s3');
         $companyName = str_replace(' ', '_', $data['company_name_en']);
-        $companyNamePath = $companyName.'_'.rand(10000, 99999).'.jpg';
+        $companyNamePath = $companyName.'_'.rand(10000, 99999);
         $file = $request->file('company_logo_image');
         if (!is_null($file)) {
             $uploaded = $s3->put('/logo/'.$companyNamePath, file_get_contents($file), 'public');
@@ -70,15 +70,18 @@ class CompanyController extends Controller
         }
         $companyNamePath = $data['logo'];
         $s3 = Storage::disk('s3');
-        if ($data['logo'] == '-') {
-            $companyName = str_replace(' ', '_', $data['company_name_en']);
-            $companyNamePath = $companyName.'_'.rand(10000, 99999).'.jpg';
-        }
         $file = $request->file('company_logo_image');
-        if (!is_null($file)) {
+        $companyName = str_replace(' ', '_', $data['company_name_en']);
+        $companyNamePath = $companyName.'_'.rand(10000, 99999);
+        
+        if ($data['logo'] == '-' && !is_null($file)) {
             $uploaded = $s3->put('/logo/'.$companyNamePath, file_get_contents($file), 'public');
-            $data['logo'] = $companyNamePath;
+        } else if ($data['logo'] !== '-' && !is_null($file)) {
+            $uploaded = $s3->delete('/logo/'. $data['logo']);
+            $uploaded = $s3->put('/logo/'. $companyNamePath, file_get_contents($file), 'public');
         }
+
+        $data['logo'] = $companyNamePath;
         $updated = $this->company->updateCompanyById($data);
         return response()->json($updated, 200);
     }

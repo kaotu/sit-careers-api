@@ -97,7 +97,10 @@ class CompanyRepository implements CompanyRepositoryInterface
         $company->end_business_time = $data['end_business_time'];
         $company->save();
 
-        $address = Address::where('company_id', $id)->first();
+        $address = Address::where([
+            ['company_id', $id],
+            ['address_type', 'company']
+        ])->first();
         $address->address_one = $data['address_one'];
         $address->address_two = $data['address_two'] == "" ? "-": $data['address_two'];
         $address->lane = $data['lane'] == "" ? "-": $data['lane'];
