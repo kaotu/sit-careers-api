@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Validator;
+use Storage;
 
 use Illuminate\Http\Request;
 
@@ -45,6 +46,13 @@ class AnnouncementController extends Controller
         $validated = Validator::make($data, $this->rulesCreationAnnouncement);
         if ($validated->fails()) {
             return response()->json($validated->messages(), 400);
+        }
+        $s3 = Storage::disk('s3');
+        $imageName = str_replace(' ', '_', $data['announcement_title']).'_'.rand(10000, 99999);
+        $file = $request->file('file_picture');
+        if (!is_null($file)) {
+            $uploaded = $s3->put('/cover_announcement/'.$imageName, file_get_contents($file), 'public');
+            $data['picture'] = $imageName;
         }
         $announcements = $this->announcement->createAnnouncement($data);
         return response()->json($announcements, 200);
