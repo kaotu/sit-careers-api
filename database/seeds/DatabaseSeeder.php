@@ -11,6 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call('JobPositionsSeeder');
+        $this->call([
+            'JobPositionsSeeder',
+            'PermissionsSeeder',
+            'RolesSeeder',
+            'RolePermissionsSeeder'
+        ]);
     }
 }
