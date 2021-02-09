@@ -19,7 +19,9 @@ class AppServiceProvider extends ServiceProvider
             'MOU',
             'Announcement',
             'JobPosition',
-            'JobType'
+            'JobType',
+            'User',
+            'Role'
         );
 
         foreach ($models as $model) {
