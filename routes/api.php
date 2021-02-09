@@ -34,3 +34,11 @@ Route::prefix('academic-industry')->group(function () {
 
 // keep for dashboard feature
 Route::get('companies', 'CompanyController@getCompanies');
+
+Route::get('users', 'UserController@get');
+Route::get('user/{user_id}', 'UserController@getUserById');
+Route::post('user', 'UserController@create');
+Route::put('user', 'UserController@update');
+Route::delete('user/{user_id}', 'UserController@destroy');
+
+Route::get('roles', 'RoleController@get');
