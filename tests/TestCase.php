@@ -10,6 +10,7 @@ use App\Models\Announcement;
 use App\Models\Address;
 use App\Models\Company;
 use App\Models\JobPosition;
+use App\Models\User;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -19,12 +20,13 @@ abstract class TestCase extends BaseTestCase
     protected $fakerJobPosition;
     protected $fakerAnnouncement;
 
-
     public function setUp() :void {
         parent::setUp();
+        $this->artisan('db:seed');
         $this->faker = factory(Company::class)->create();
         $this->fakerJobPosition = factory(JobPosition::class)->create();
         $this->fakerAddress = factory(Address::class)->create();
         $this->fakerAnnouncement = factory(Announcement::class)->create();
+        $this->fakerUser = factory(User::class)->create();
     }
 }
