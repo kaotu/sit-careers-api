@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller as Controller;
 use App\Repositories\AnnouncementRepositoryInterface;
 use App\Http\RulesValidation\AnnouncementRules;
-
+use Throwable;
 
 class AnnouncementController extends Controller
 {
@@ -61,11 +61,25 @@ class AnnouncementController extends Controller
     public function update(Request $request)
     {
         $data = $request->all();
-        $validated = Validator::make($data, $this->rulesUpdateAnnouncementById);
-        if ($validated->fails()) {
-            return response()->json($validated->messages(), 400);
+        try {
+            $validated = Validator::make($data, $this->rulesUpdateAnnouncementById);
+            if ($validated->fails()) {
+                return response()->json($validated->messages(), 400);
+            }
+            $imageName = $data['picture'];
+            $s3 = Storage::disk('s3');
+            $file = $request->file('file_picture');
+            $imageName = str_replace(' ', '_', $data['announcement_title']).'_'.rand(10000, 99999);
+
+            if(!is_null($file)) {
+                $uploaded = $s3->delete('/cover_announcement/'.$data['picture']);
+                $uploaded = $s3->put('/cover_announcement/'.$imageName, file_get_contents($file), 'public');
+                $data['picture'] = $imageName;
+            }
+            $announcement_updated = $this->announcement->updateAnnouncement($data);
+        } catch (Throwable $e) {
+            return "Something Wrong: ".$e;
         }
-        $announcement_updated = $this->announcement->updateAnnouncement($data);
         return response()->json($announcement_updated, 200);
     }
 
