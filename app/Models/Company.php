@@ -33,7 +33,7 @@ class Company extends Model
 
     public function announcement()
     {
-        return $this->hasOne('App\Model\Announcement', 'announcement_id');
+        return $this->hasMany('App\Model\Announcement', 'announcement_id');
     }
 
     public function business_days()
