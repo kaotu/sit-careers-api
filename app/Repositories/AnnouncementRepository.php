@@ -41,6 +41,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
                         ->where('announcements.company_id', $company_id)
                         ->select(
                             'announcements.announcement_title',
+                            'announcements.announcement_id',
                             'announcements.start_date',
                             'announcements.end_date',
                             'companies.company_name_th',
