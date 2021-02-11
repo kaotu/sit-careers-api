@@ -20,8 +20,10 @@ class UsersTable extends Migration
             $table->string('password');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('created_by');
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('users', function (Blueprint $table) {

@@ -13,6 +13,7 @@ class User extends Model
 
     protected $table = 'users';
     protected $primaryKey = 'user_id';
+    protected $hidden = ['password', 'fist_name', 'last_name'];
     public $incrementing = false;
 
     protected $keyType = 'uuid';
