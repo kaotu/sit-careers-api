@@ -15,10 +15,10 @@ class HistoriesTable extends Migration
     {
         Schema::create('histories', function (Blueprint $table) {
             $table->uuid('history_id')->primary();
-            $table->date('created_at');
-            $table->date('updated_at');
             $table->uuid('user_id')->nullable(false);
             $table->uuid('announcement_id')->nullable(false);
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('histories', function (Blueprint $table) {
@@ -37,5 +37,9 @@ class HistoriesTable extends Migration
         Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('histories');
         Schema::enableForeignKeyConstraints();
+
+        Schema::table('histories', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }
