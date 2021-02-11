@@ -31,6 +31,12 @@ Route::prefix('academic-industry')->group(function () {
     Route::post('announcement', 'AnnouncementController@create');
     Route::put('announcement', 'AnnouncementController@update');
     Route::delete('announcement', 'AnnouncementController@destroy');
+
+    Route::get('applications', 'ApplicationController@get');
+    Route::get('application/{application_id}', 'ApplicationController@getApplicationById');
+    Route::post('application', 'ApplicationController@create');
+    Route::put('application', 'ApplicationController@update');
+    Route::delete('application/{application_id}', 'ApplicationController@destroy');
 });
 
 // keep for dashboard feature
