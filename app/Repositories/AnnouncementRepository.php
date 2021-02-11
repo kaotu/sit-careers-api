@@ -33,6 +33,26 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         return $announcements;
     }
 
+    public function getAnnouncementByCompanyId($company_id)
+    {
+        $announcements = Announcement::join('companies', 'companies.company_id', '=', 'announcements.company_id')
+                        ->join('job_types', 'job_types.announcement_id', '=', 'announcements.announcement_id')
+                        ->join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
+                        ->where('announcements.company_id', $company_id)
+                        ->select(
+                            'announcements.announcement_title',
+                            'announcements.start_date',
+                            'announcements.end_date',
+                            'companies.company_name_th',
+                            'companies.company_name_en',
+                            'companies.logo',
+                            'job_positions.job_position',
+                            'job_types.job_type'
+                        )
+                        ->get();
+        return $announcements;
+    }
+
     public function createAnnouncement($data)
     {
         $address = new Address();
