@@ -102,7 +102,7 @@ class ApplicationTest extends TestCase
         $response = $this->deleteJson('api/academic-industry/application/'.$this->fakerApp->application_id);
         $response = json_decode($response->content(), true);
 
-        $this->assertEquals($response['message'], 'User has been deleted.');
+        $this->assertEquals($response['message'], 'Application has been deleted.');
         $this->assertSoftDeleted('applications', [
             'application_id' => $this->fakerApp->application_id
         ]);
