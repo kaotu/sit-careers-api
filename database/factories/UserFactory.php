@@ -19,7 +19,7 @@ $factory->define(User::class, function (Faker $faker) use ($factory) {
         'password' => '123',
         'first_name' => 'Tassaneeewan',
         'last_name' => 'Noita',
-        'email' => 'tassd.noita@mail.com',
+        'email' => $faker->unique()->email,
         'created_by' => ''
     ];
 });
