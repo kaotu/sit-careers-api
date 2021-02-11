@@ -22,7 +22,8 @@ class AppServiceProvider extends ServiceProvider
             'JobType',
             'User',
             'Role',
-            'Application'
+            'Application',
+            'History'
         );
 
         foreach ($models as $model) {

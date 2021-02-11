@@ -49,3 +49,5 @@ Route::put('user', 'UserController@update');
 Route::delete('user/{user_id}', 'UserController@destroy');
 
 Route::get('roles', 'RoleController@get');
+
+Route::get('histories', 'HistoryController@getHistories');
