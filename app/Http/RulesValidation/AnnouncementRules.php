@@ -10,7 +10,7 @@ trait AnnouncementRules
         'announcement_title' => 'required|string',
         'job_description' => 'required|string',
         'property' => 'required|string',
-        'file_picture' => 'present|mimes:jpeg,jpg,png,gif|max:5242880|nullable',
+        'file_picture' => 'nullable|mimes:jpeg,jpg,png,gif|max:5242880',
         'picture' => 'nullable|string',
         'start_date' => 'required|string',
         'end_date' => 'required|string',

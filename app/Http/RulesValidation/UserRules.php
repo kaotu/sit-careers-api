@@ -8,12 +8,12 @@ trait UserRules
 {
     private $rulesCreationUser = [
         'role_id' => 'required|string',
-        'email' => 'required|string'
+        'email' => 'required|email|unique:users'
     ];
 
     private $rulesUpdateUser = [
         'role_id' => 'required|string',
         'user_id' => 'required|string',
-        'email' => 'required|string'
+        'email' => 'required|email|unique:users'
     ];
 }

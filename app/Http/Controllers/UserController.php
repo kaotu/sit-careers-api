@@ -69,9 +69,11 @@ class UserController extends Controller
     {
         try {
             $deleted = $this->user->deleteUserByUserId($user_id);
-            return response()->json([
-                'message' => 'User has been deleted.'
-            ], 200);
+            $message = $deleted;
+            if ($deleted) {
+                $message = 'User has been deleted.';
+            }
+            return response()->json([ "message" => $message ], 200);
         } catch (\Throwable $th) {
             return "Something Wrong: " . $th;
         }

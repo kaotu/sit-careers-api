@@ -21,9 +21,10 @@ class AnnouncementsTable extends Migration
             $table->string('job_description');
             $table->uuid('job_position_id')->nullable(false);
             $table->string('property');
+            $table->string('priority')->nullable();
             $table->string('picture')->nullable();
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->datetime('start_date');
+            $table->datetime('end_date');
             $table->string('salary');
             $table->string('welfare');
             $table->string('status');
