@@ -60,6 +60,49 @@ class AnnouncementTest extends TestCase
         $this->assertEquals($announcement_arr, $response_arr['announcement_id']);
     }
 
+    public function test_get_announcement_by_company_id_should_return_data_from_db()
+    {
+        $data = [
+            'company_id' => $this->faker->company_id,
+            'announcement_title' => 'รับสมัครงานตำแหน่ง Software Engineer',
+            'job_description' => 'เป็นซอฟ์ตแวร์เอน เอนแบบเอนเตอร์เทน',
+            'job_position_id' => $this->fakerJobPosition->job_position_id,
+            'property' => 'ขยันเป็นพอ',
+            'file_picture' => '',
+            'picture' => '',
+            'start_date' => '2021-01-10 13:00:00',
+            'end_date' => '2021-03-31 17:00:00',
+            'salary' => '30,000',
+            'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
+            'status' => 'เปิดรับสมัคร',
+            'job_type' => 'WiL',
+            'address_one' => '138/2 พรีวิวหอพัก',
+            'address_two' => '-',
+            'lane' => '9',
+            'road' => 'วิภาวดีรังสิต',
+            'sub_district' => 'ดินแดง',
+            'district' => 'ดินแดง',
+            'province' => 'กรุงเทพ',
+            'postal_code' => '10400',
+            'start_business_day' => 'จันทร์',
+            'end_business_day' => 'ศุกร์',
+            'start_business_time' => '09:00',
+            'end_business_time' => '18:00',
+        ];
+
+        $response = $this->postJson('api/academic-industry/announcement', $data);
+        $response->assertStatus(200);
+
+        $response = $this->get('api/academic-industry/announcements/'.$this->faker->company_id);
+        $response->assertStatus(200);
+
+        $responseGetByID = json_decode($response->content(), true);
+        
+        $this->assertDatabaseHas('announcements', [
+            'announcement_id' => $responseGetByID[0]['announcement_id']
+        ]);
+    }
+
     public function test_post_announcement_fail_should_return_error_message()
     {
         //Filed announcement_title and property are missing

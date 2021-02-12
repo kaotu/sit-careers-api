@@ -22,9 +22,13 @@ class ApplicationsTable extends Migration
             $table->string('name_title');
             $table->string('first_name');
             $table->string('last_name');
-            $table->integer('tel_no');
+            $table->string('email');
+            $table->string('tel_no', 10);
+            $table->string('note');
             $table->string('resume_link');
             $table->string('path_file');
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('applications', function (Blueprint $table) {
