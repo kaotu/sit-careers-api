@@ -14,7 +14,7 @@ class BannersTable extends Migration
     public function up()
     {
         Schema::create('banners', function (Blueprint $table) {
-            $table->bigInteger('banner_id')->primary();
+            $table->bigIncrements('banner_id');
             $table->string('path_image')->nullable();
             $table->timestamps();
             $table->softDeletes();
