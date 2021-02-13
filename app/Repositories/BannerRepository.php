@@ -27,4 +27,16 @@ class BannerRepository implements BannerRepositoryInterface
 
         return array_merge($banner->toArray());
     }
+
+    public function deleteBannerById($id)
+    {
+        $banner = Banner::find($id)
+                ->first();
+        if ($banner) {
+            $deleted_banner = $banner->delete();
+            return $deleted_banner;
+        }
+
+        return "Find not found banner";
+    }
 }

@@ -45,4 +45,11 @@ class BannerController extends Controller
         $banner = $this->banner->createBanner($data);
         return response()->json($banner, 200);
     }
+
+    public function destroy(Request $request)
+    {
+        $id = request()->all();
+        $banner_deleted =$this->banner->deleteBannerById($id);
+        return response()->json($banner_deleted, 200);
+    }
 }
