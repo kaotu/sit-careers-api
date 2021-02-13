@@ -54,3 +54,4 @@ Route::get('histories', 'HistoryController@getHistories');
 
 Route::get('banners', 'BannerController@get');
 Route::get('banner', 'BannerController@getBannerById');
+Route::post('banner', 'BannerController@create');

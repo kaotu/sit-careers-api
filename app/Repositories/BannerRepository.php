@@ -18,4 +18,13 @@ class BannerRepository implements BannerRepositoryInterface
         $banners = Banner::all();
         return $banners;
     }
+
+    public function createBanner($data)
+    {
+        $banner = new Banner();
+        $banner->path_image	= $data['path_image'] == "" ? "-": $data['path_image'];
+        $banner->save();
+
+        return array_merge($banner->toArray());
+    }
 }
