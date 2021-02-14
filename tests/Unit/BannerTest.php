@@ -57,15 +57,13 @@ class BannerTest extends TestCase
 
     public function test_delete_banner_by_id_success_should_return_true()
     {
-        $data = $this->fakerBanner;
-
-        $get_banner_id = [
-            'banner_id' => $data['banner_id']
+        $data = [
+            'banner_id' => (string) $this->fakerBanner->banner_id,
+            'path_image' => $this->fakerBanner->path_image
         ];
 
         $expected_banner = true;
-
-        $response = $this->deleteJson('api/banner', $get_banner_id);
+        $response = $this->deleteJson('api/banner', $data);
         $response_arr = json_decode($response->content(), true);
         $this->assertEquals($response_arr, $expected_banner);
     }
@@ -73,7 +71,8 @@ class BannerTest extends TestCase
     public function test_delete_banner_by_id_fail_should_return_error_message()
     {
         $id = [
-            'banner_id' => null
+            'banner_id' => "1",
+            'path_image' => $this->fakerBanner->path_image
         ];
 
         $expected_banner = 'Find not found banner';
