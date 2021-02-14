@@ -60,8 +60,22 @@ class BannerController extends Controller
 
     public function destroy(Request $request)
     {
-        $id = request()->all();
-        $banner_deleted =$this->banner->deleteBannerById($id);
+        $data = request()->all();
+        $bannerName = $data['path_image'];
+
+        $validated = Validator::make($data, $this->ruleDeletionBanner);
+        if ($validated->fails()) {
+            return response()->json($validated->messages(), 400);
+        }
+
+        if ($bannerName == '-') {
+            $banner_deleted =$this->banner->deleteBannerById($data);
+        }else {
+            $s3 = Storage::disk('s3');
+            $deleted = $s3->delete('/banner/'.$bannerName);
+            $banner_deleted =$this->banner->deleteBannerById($data);
+        }
+
         return response()->json($banner_deleted, 200);
     }
 }
