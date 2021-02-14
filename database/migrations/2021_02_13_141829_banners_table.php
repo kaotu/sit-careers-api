@@ -17,7 +17,6 @@ class BannersTable extends Migration
             $table->bigIncrements('banner_id');
             $table->string('path_image')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -29,8 +28,5 @@ class BannersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('banners');
-        Schema::table('banners', function (Blueprint $table){
-            $table->dropSoftDeletes();
-        });
     }
 }
