@@ -10,10 +10,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Models\Announcement;
 use App\Models\JobType;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class AnnouncementTest extends TestCase
 {
     use RefreshDatabase;
+    use WithoutMiddleware;
 
     public function test_get_all_announcements_success_should_return_status_200()
     {
@@ -99,7 +101,7 @@ class AnnouncementTest extends TestCase
         $response->assertStatus(200);
 
         $responseGetByID = json_decode($response->content(), true);
-        
+
         $this->assertDatabaseHas('announcements', [
             'announcement_id' => $responseGetByID[0]['announcement_id']
         ]);
@@ -107,7 +109,7 @@ class AnnouncementTest extends TestCase
 
     public function test_post_announcement_fail_should_return_error_message()
     {
-        //Filed announcement_title and property are missing
+        //Field announcement_title and property are missing
         $data = [
             'company_id' => $this->faker->company_id,
             'job_description' => 'เป็นซอฟ์ตแวร์เอน เอนแบบเอนเตอร์เทน',
@@ -287,40 +289,9 @@ class AnnouncementTest extends TestCase
 
     public function test_delete_announcement_by_id_fail_should_return_fail_message()
     {
-        $data_post = [
-            'company_id' => $this->faker->company_id,
-            'announcement_title' => 'รับสมัครงานตำแหน่ง Software Engineer',
-            'job_description' => 'เป็นซอฟ์ตแวร์เอน เอนแบบเอนเตอร์เทน',
-            'job_position_id' => $this->fakerJobPosition->job_position_id,
-            'property' => 'ขยันเป็นพอ',
-            'priority' => '-',
-            'picture' => 'path/picture',
-            'file_picture' => '',
-            'start_date' => '2021-01-10 13:00:00',
-            'end_date' => '2021-03-31 17:00:00',
-            'salary' => '30,000',
-            'welfare' => 'เงินดี ไม่ต้องแย่งลงทะเบียน',
-            'status' => 'เปิดรับสมัคร',
-            'job_type' => 'WiL',
-            'address_one' => '138/2 พรีวิวหอพัก',
-            'address_two' => '-',
-            'lane' => '9',
-            'road' => 'วิภาวดีรังสิต',
-            'sub_district' => 'ดินแดง',
-            'district' => 'ดินแดง',
-            'province' => 'กรุงเทพ',
-            'postal_code' => '10400',
-            'start_business_day' => 'จันทร์',
-            'end_business_day' => 'ศุกร์',
-            'start_business_time' => '09:00',
-            'end_business_time' => '18:00',
-        ];
-
         $id = [
             'announcement_id' => $this->fakerAnnouncement->announcement_id
         ];
-
-        $response_post_method = $this->postJson('api/academic-industry/announcement', $id);
 
         $expected_announcement = 'Find not found announcement or job type or address or business day.';
 
