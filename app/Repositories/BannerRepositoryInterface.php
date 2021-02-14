@@ -8,5 +8,5 @@ interface BannerRepositoryInterface
     public function getBannerById($id);
     public function getAllBanners();
     public function createBanner($data);
-    public function deleteBannerById($id);
+    public function deleteBannerById($data);
 }
