@@ -69,11 +69,11 @@ class BannerController extends Controller
         }
 
         if ($bannerName == '-') {
-            $banner_deleted =$this->banner->deleteBannerById($data);
-        }else {
+            $banner_deleted = $this->banner->deleteBannerById($data);
+        } else {
             $s3 = Storage::disk('s3');
             $deleted = $s3->delete('/banner/'.$bannerName);
-            $banner_deleted =$this->banner->deleteBannerById($data);
+            $banner_deleted = $this->banner->deleteBannerById($data);
         }
 
         return response()->json($banner_deleted, 200);
