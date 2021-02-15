@@ -18,6 +18,7 @@ use App\Models\Role;
 class UserTest extends TestCase
 {
     use RefreshDatabase;
+    use WithoutMiddleware;
 
     public function test_get_all_user_success_should_return_status_200()
     {
@@ -44,7 +45,7 @@ class UserTest extends TestCase
         $this->assertEquals($response_arr['message'], 'Create user successful.');
     }
 
-    
+
     public function test_get_user_by_id_success_should_return_data()
     {
         $roleAdmin = Role::where('role_name', 'admin')->first();

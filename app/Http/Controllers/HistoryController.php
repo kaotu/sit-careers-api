@@ -16,7 +16,7 @@ class HistoryController extends Controller
         $this->history = $history_repo;
     }
 
-    public function getHistories(Request $request)
+    public function get(Request $request)
     {
         $histories = $request->all();
         $histories = $this->history->getAllHistories();

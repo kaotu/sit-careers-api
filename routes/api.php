@@ -50,4 +50,9 @@ Route::delete('user/{user_id}', 'UserController@destroy');
 
 Route::get('roles', 'RoleController@get');
 
-Route::get('histories', 'HistoryController@getHistories');
+Route::get('histories', 'HistoryController@get');
+
+Route::get('banners', 'BannerController@get');
+Route::get('banner', 'BannerController@getBannerById');
+Route::post('banner', 'BannerController@create');
+Route::delete('banner', 'BannerController@destroy');

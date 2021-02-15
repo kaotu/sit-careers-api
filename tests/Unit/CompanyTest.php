@@ -19,6 +19,7 @@ use App\Models\MOU;
 class CompanyTest extends TestCase
 {
     use RefreshDatabase;
+    use WithoutMiddleware;
 
     public function test_get_all_companies_success_should_return_status_200()
     {

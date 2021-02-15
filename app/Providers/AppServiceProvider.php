@@ -23,7 +23,8 @@ class AppServiceProvider extends ServiceProvider
             'User',
             'Role',
             'Application',
-            'History'
+            'History',
+            'Banner'
         );
 
         foreach ($models as $model) {

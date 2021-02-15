@@ -11,10 +11,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Application;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class ApplicationTest extends TestCase
 {
     use RefreshDatabase;
+    use WithoutMiddleware;
 
     public function test_get_all_application_success_should_return_status_200()
     {
