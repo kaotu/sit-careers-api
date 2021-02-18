@@ -69,7 +69,8 @@ class CompanyRepository implements CompanyRepositoryInterface
         $mou->company_id = $company->company_id;
         $mou->mou_link = $data['mou_link'] == "" ? "-": $data['mou_link'];
         $mou->mou_type = $data['mou_type'] == "" ? "-": $data['mou_type'];
-        $mou->contact_period = $data['contact_period'] == "" ? "-": $data['contact_period'];
+        $mou->start_date_mou = $data['start_date_mou'] == "" ? "-": $data['start_date_mou'];
+        $mou->end_date_mou = $data['end_date_mou'] == "" ? "-": $data['end_date_mou'];
         $mou->save();
 
         return array_merge($company->toArray(),  $address->toArray(), $mou->toArray());
@@ -117,7 +118,8 @@ class CompanyRepository implements CompanyRepositoryInterface
         $mou->company_id = $company->company_id;
         $mou->mou_link = $data['mou_link'] == "" ? "-": $data['mou_link'];
         $mou->mou_type = $data['mou_type'] == "" ? "-": $data['mou_type'];
-        $mou->contact_period = $data['contact_period'] == "" ? "-": $data['contact_period'];
+        $mou->start_date_mou = $data['start_date_mou'] == "" ? "-": $data['start_date_mou'];
+        $mou->end_date_mou = $data['end_date_mou'] == "" ? "-": $data['end_date_mou'];
         $mou->save();
 
         return array_merge($company->toArray(),  $address->toArray(), $mou->toArray());
