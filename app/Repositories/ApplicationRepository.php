@@ -32,6 +32,8 @@ class ApplicationRepository implements ApplicationRepositoryInterface
         $application->first_name = $data->first_name;
         $application->email = $data->email;
         $application->last_name = $data->last_name;
+        $application->curriculum = $data->curriculum;
+        $application->year = $data->year;
         $application->tel_no = $data->tel_no;
         $application->resume_link = $data->resume_link;
         $application->path_file = $data->path_file;

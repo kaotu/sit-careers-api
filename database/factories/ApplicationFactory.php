@@ -20,6 +20,8 @@ $factory->define(Application::class, function (Faker $faker) use ($factory) {
         'name_title' => 'นาย',
         'first_name' => 'ชาเขียว',
         'last_name' => 'มัทฉะ',
+        'curriculum' => 'IT',
+        'year' => '4',
         'tel_no' => '0956787294',
         'email' => 'mild@gmail.com',
         'resume_link' => 'https://mild-resume.netlify.com/',
