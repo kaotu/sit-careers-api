@@ -18,7 +18,8 @@ class MouTable extends Migration
             $table->uuid('company_id')->nullable(false);
             $table->string('mou_link');
             $table->string('mou_type');
-            $table->string('contact_period');
+            $table->string('start_date_mou', 20);
+            $table->string('end_date_mou', 20);
             $table->timestamps();
             $table->softDeletes();
         });

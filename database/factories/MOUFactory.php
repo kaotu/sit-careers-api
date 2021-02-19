@@ -12,6 +12,7 @@ $factory->define(MOU::class, function (Faker $faker) {
         "mou_id" => Uuid::uuid(),
         "mou_type" => "ชนิด MOU",
         "mou_link" => "https://www.google.co.th",
-        "contact_period" => "30 กันยายน 2563 - 30 กันยายน 2565"
+        "start_date_mou" => "30 กันยายน 2563",
+        "end_date_mou" => "30 กันยายน 2565"
     ];
 });

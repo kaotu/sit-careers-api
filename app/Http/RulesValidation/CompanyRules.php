@@ -34,7 +34,8 @@ trait CompanyRules
         "postal_code" => "required|string|max:5",
         "mou_link" => "nullable|string",
         "mou_type" => "nullable|string",
-        "contact_period" => "nullable|string"
+        "start_date_mou" => "nullable|string",
+        "end_date_mou" => "nullable|string"
     ];
 
     private $rulesGetCompanyById = [

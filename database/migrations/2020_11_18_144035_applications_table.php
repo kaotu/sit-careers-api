@@ -22,6 +22,8 @@ class ApplicationsTable extends Migration
             $table->string('name_title');
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('curriculum', 10);
+            $table->string('year', 10);
             $table->string('email');
             $table->string('tel_no', 10);
             $table->string('note');
