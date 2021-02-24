@@ -13,7 +13,8 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
 {
     public function getAnnouncementById($id)
     {
-        $announcement = Announcement::join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
+        $announcement = Announcement::join('companies', 'companies.company_id', '=', 'announcements.company_id')
+                        ->join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
                         ->join('job_types', 'job_types.announcement_id', '=', 'announcements.announcement_id')
                         ->join('addresses', 'addresses.address_id', '=', 'announcements.address_id')
                         ->where('announcements.announcement_id', $id)
@@ -28,8 +29,28 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
                         ->join('job_types', 'job_types.announcement_id', '=', 'announcements.announcement_id')
                         ->join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
                         ->where('addresses.address_type', 'announcement')
-                        ->select('announcements.*', 'companies.company_id', 'companies.company_type', 'companies.company_name_en', 'companies.company_name_th', 'companies.logo', 'job_types.*', 'job_positions.*', 'addresses.*')
-                        ->get();
+                        ->select(
+                            'announcements.*',
+                            'companies.company_id',
+                            'companies.company_type',
+                            'companies.company_name_en',
+                            'companies.company_name_th',
+                            'companies.logo',
+                            'job_types.job_type',
+                            'job_types.job_id',
+                            'job_positions.job_position',
+                            'job_positions.job_position_id',
+                            'addresses.address_id',
+                            'addresses.address_one',
+                            'addresses.address_two',
+                            'addresses.lane',
+                            'addresses.road',
+                            'addresses.sub_district',
+                            'addresses.district',
+                            'addresses.province',
+                            'addresses.address_type',
+                            'addresses.postal_code'
+                        )->get();
         return $announcements;
     }
 
@@ -104,6 +125,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $announcement->announcement_title = $data['announcement_title'];
         $announcement->job_description = $data['job_description'];
         $announcement->job_position_id = $data['job_position_id'];
+        $announcement->company_id = $data['company_id'];
         $announcement->property = $data['property'];
         $announcement->priority = $data['priority'] == "" ? "-": $data['priority'];
         $announcement->picture = $data['picture'] == "" ? "-": $data['picture'];
@@ -132,6 +154,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $address->sub_district = $data['sub_district'];
         $address->district = $data['district'];
         $address->province = $data['province'];
+        $address->company_id = $data['company_id'];
         $address->postal_code = $data['postal_code'];
         $address->save();
 

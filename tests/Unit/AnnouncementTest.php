@@ -168,6 +168,7 @@ class AnnouncementTest extends TestCase
         $data = [
             'announcement_id' => $this->fakerAnnouncement->announcement_id,
             'address_id' => $address->address_id,
+            'company_id' => $this->faker->company_id,
             'announcement_title' => 'รับสมัครงานตำแหน่ง UX/UI',
             'job_description' => 'ต้องการ UX/UI',
             'job_position_id' => $this->fakerJobPosition->job_position_id,
