@@ -44,11 +44,11 @@ class BannerController extends Controller
             return response()->json($validated->messages(), 400);
         }
         try {
-            $s3 = Storage::disk('s3');
+            $storage = Storage::disk('minio');
             $bannerName = str_replace(' ', '-', time().'_'.rand(10000,99999));
             $file = $request->file('file_banner');
             if (!is_null($file)) {
-                $uploaded = $s3->put('/banner/'.$bannerName, file_get_contents($file), 'public');
+                $uploaded = $storage->put('/banner/'.$bannerName, file_get_contents($file), 'public');
                 $data['path_image'] = $bannerName;
             }
             $banner = $this->banner->createBanner($data);
@@ -71,8 +71,8 @@ class BannerController extends Controller
         if ($bannerName == '-') {
             $banner_deleted = $this->banner->deleteBannerById($data);
         } else {
-            $s3 = Storage::disk('s3');
-            $deleted = $s3->delete('/banner/'.$bannerName);
+            $storage = Storage::disk('minio');
+            $deleted = $storage->delete('/banner/'.$bannerName);
             $banner_deleted = $this->banner->deleteBannerById($data);
         }
 
