@@ -49,12 +49,12 @@ class CompanyController extends Controller
         if ($validated->fails()) {
             return response()->json($validated->messages(), 400);
         }
-        $s3 = Storage::disk('s3');
+        $storage = Storage::disk('minio');
         $companyName = str_replace(' ', '_', $data['company_name_en']);
         $companyNamePath = $companyName.'_'.rand(10000, 99999);
         $file = $request->file('company_logo_image');
         if (!is_null($file)) {
-            $uploaded = $s3->put('/logo/'.$companyNamePath, file_get_contents($file), 'public');
+            $uploaded = $storage->put('/logo/'.$companyNamePath, file_get_contents($file), 'public');
             $data['logo'] = $companyNamePath;
         }
         $companies = $this->company->createCompany($data);
@@ -69,16 +69,16 @@ class CompanyController extends Controller
             return response()->json($validated->messages(), 400);
         }
         $companyNamePath = $data['logo'];
-        $s3 = Storage::disk('s3');
+        $storage = Storage::disk('minio');
         $file = $request->file('company_logo_image');
         $companyName = str_replace(' ', '_', $data['company_name_en']);
         $companyNamePath = $companyName.'_'.rand(10000, 99999);
-        
+
         if ($data['logo'] == '-' && !is_null($file)) {
-            $uploaded = $s3->put('/logo/'.$companyNamePath, file_get_contents($file), 'public');
+            $uploaded = $storage->put('/logo/'.$companyNamePath, file_get_contents($file), 'public');
         } else if ($data['logo'] !== '-' && !is_null($file)) {
-            $uploaded = $s3->delete('/logo/'. $data['logo']);
-            $uploaded = $s3->put('/logo/'. $companyNamePath, file_get_contents($file), 'public');
+            $uploaded = $storage->delete('/logo/'. $data['logo']);
+            $uploaded = $storage->put('/logo/'. $companyNamePath, file_get_contents($file), 'public');
         }
 
         $data['logo'] = $companyNamePath;

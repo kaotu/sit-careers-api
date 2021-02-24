@@ -53,11 +53,11 @@ class AnnouncementController extends Controller
         if ($validated->fails()) {
             return response()->json($validated->messages(), 400);
         }
-        $s3 = Storage::disk('s3');
+        $storage = Storage::disk('minio');
         $imageName = str_replace(' ', '_', $data['announcement_title']).'_'.rand(10000, 99999);
         $file = $request->file('file_picture');
         if (!is_null($file)) {
-            $uploaded = $s3->put('/cover_announcement/'.$imageName, file_get_contents($file), 'public');
+            $uploaded = $storage->put('/cover_announcement/'.$imageName, file_get_contents($file), 'public');
             $data['picture'] = $imageName;
         }
         $announcements = $this->announcement->createAnnouncement($data);
@@ -73,13 +73,13 @@ class AnnouncementController extends Controller
                 return response()->json($validated->messages(), 400);
             }
             $imageName = $data['picture'];
-            $s3 = Storage::disk('s3');
+            $storage = Storage::disk('minio');
             $file = $request->file('file_picture');
             $imageName = str_replace(' ', '_', $data['announcement_title']).'_'.rand(10000, 99999);
 
             if(!is_null($file)) {
-                $uploaded = $s3->delete('/cover_announcement/'.$data['picture']);
-                $uploaded = $s3->put('/cover_announcement/'.$imageName, file_get_contents($file), 'public');
+                $uploaded = $storage->delete('/cover_announcement/'.$data['picture']);
+                $uploaded = $storage->put('/cover_announcement/'.$imageName, file_get_contents($file), 'public');
                 $data['picture'] = $imageName;
             }
             $announcement_updated = $this->announcement->updateAnnouncement($data);
