@@ -13,7 +13,8 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
 {
     public function getAnnouncementById($id)
     {
-        $announcement = Announcement::join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
+        $announcement = Announcement::join('companies', 'companies.company_id', '=', 'announcements.company_id')
+                        ->join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
                         ->join('job_types', 'job_types.announcement_id', '=', 'announcements.announcement_id')
                         ->join('addresses', 'addresses.address_id', '=', 'announcements.address_id')
                         ->where('announcements.announcement_id', $id)
@@ -133,6 +134,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $address->sub_district = $data['sub_district'];
         $address->district = $data['district'];
         $address->province = $data['province'];
+        $address->company_id = $data['company_id'];
         $address->postal_code = $data['postal_code'];
         $address->save();
 
