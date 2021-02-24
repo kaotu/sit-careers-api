@@ -104,6 +104,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
         $announcement->announcement_title = $data['announcement_title'];
         $announcement->job_description = $data['job_description'];
         $announcement->job_position_id = $data['job_position_id'];
+        $announcement->company_id = $data['company_id'];
         $announcement->property = $data['property'];
         $announcement->priority = $data['priority'] == "" ? "-": $data['priority'];
         $announcement->picture = $data['picture'] == "" ? "-": $data['picture'];
