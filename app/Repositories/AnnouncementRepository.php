@@ -28,7 +28,7 @@ class AnnouncementRepository implements AnnouncementRepositoryInterface
                         ->join('job_types', 'job_types.announcement_id', '=', 'announcements.announcement_id')
                         ->join('job_positions', 'job_positions.job_position_id', '=', 'announcements.job_position_id')
                         ->where('addresses.address_type', 'announcement')
-                        ->select('announcements.*', 'companies.company_id', 'companies.company_name_en', 'companies.company_name_th', 'companies.logo', 'job_types.*', 'job_positions.*', 'addresses.*')
+                        ->select('announcements.*', 'companies.company_id', 'companies.company_type', 'companies.company_name_en', 'companies.company_name_th', 'companies.logo', 'job_types.*', 'job_positions.*', 'addresses.*')
                         ->get();
         return $announcements;
     }
