@@ -22,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
             'JobType',
             'User',
             'Role',
+            'Permission',
+            'RolePermission',
             'Application',
             'History',
             'Banner'
