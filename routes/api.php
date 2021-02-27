@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Comment middleware group wait login feature.
 // Route::middleware(['role.permission:admin'])->group(function () {
     Route::get('company', 'CompanyController@get');
     Route::post('company', 'CompanyController@create');
