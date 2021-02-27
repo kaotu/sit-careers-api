@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware(['role.permission:admin'])->group(function () {
+// Route::middleware(['role.permission:admin'])->group(function () {
     Route::get('company', 'CompanyController@get');
     Route::post('company', 'CompanyController@create');
     Route::put('company', 'CompanyController@update');
@@ -57,4 +57,4 @@ Route::middleware(['role.permission:admin'])->group(function () {
     Route::get('banner', 'BannerController@getBannerById');
     Route::post('banner', 'BannerController@create');
     Route::delete('banner', 'BannerController@destroy');
-});
+// });
